@@ -10,7 +10,10 @@ if (isset($_GET['aksi']) && $_GET['aksi'] == 'verifikasi') {
     // Update kolom 'terverifikasi' menjadi 1 (atau teks 'Ya')
     // mysqli_query($connect, "UPDATE tabel_donasi SET terverifikasi = '1' WHERE DonasiID = '$id_verif'");
     mysqli_query($connect, "UPDATE verifikasi SET statusVerifikasi = 'Terverifikasi' WHERE verifikasiID = '$id'");
-    // mysqli_query($connect, "INSERT INTO kas (kasID, tanggal, jenis, kategori, keterangan, jumlah) VALUES ('123', '2026-04-14', 'Kas Masuk', 'Donasi', 'qwerty', '1000000');")
+    mysqli_query($connect, "INSERT INTO kas (tanggal, jenis, kategori, keterangan, jumlah, verifikasiID)
+               SELECT tanggal, 'Kas Masuk','Donasi','-', jumlah, verifikasiID
+               FROM verifikasi 
+               WHERE verifikasiID = '$id'");
     // Redirect agar URL bersih kembali
     header("Location: verifikasi.php");
     exit;
