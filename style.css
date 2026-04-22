@@ -1,0 +1,205 @@
+:root{
+    --coklat: #1B0C0C;
+    --hijau-tua: #2d5a27;
+    --hijau-muda: #1e3d1a;
+    --cream: #F2EDC2;
+    --sage: #E9F5DB;
+    --putih: #F6F4E8;
+
+    --h1-size: 32px;
+    --h2-size: 24px;
+    --h3-size: 18px;
+    --h4-size: 16px;
+    --h5-size: 14px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    background-color: var(--sage);
+}
+
+span {
+    font-family: 'Segoe UI', sans-serif;
+    color: var(--hijau-tua);
+    font-size: var(--h2-size);
+    font-weight: 900;
+}
+
+sub {
+    font-family: 'Segoe UI', sans-serif;
+    color: var(--hijau-tua);
+}
+
+.navbar-brand {
+    text-decoration: none;
+}
+
+h1, h2, p {
+    margin: 0;
+    padding: 0;
+}
+
+.hero-banner {
+    width: 100%;
+    height: 90vh;
+    background-image: url('asset/masjid.png');
+    background-size: cover;
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-title {
+    color: var(--putih);
+    font-size: 3.5rem;
+    font-weight: 700;
+    text-align: center;
+    text-shadow: 2px 4px 15px rgba(0,0,0,0.8);
+    padding: 0 20px;
+}
+
+.about-section {
+    background-color: var(--putih);
+    padding: 80px 0;
+    min-height: 400px;
+}
+
+.glass-box {
+    margin-top: -30px;
+    margin-bottom: -30px;
+    background: var(--sage);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 30px;
+    padding: 50px;
+    text-align: center;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+    color: var(--coklat);
+}
+
+.glass-box h2 {
+    color: var(--hijau-tua);
+    letter-spacing: 2px;
+}
+
+.programs-section {
+    padding: 10px 0;
+    background-color: var(--putih);
+}
+
+.section-title {
+    margin-top: -50px;
+    font-weight: 700;
+    color: var(--hijau-tua);
+    margin-bottom: 40px;
+    text-align: left;
+}
+
+.program-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease;
+    height: 100%;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.program-card:hover {
+    transform: translateY(-10px);
+}
+
+.program-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.program-content {
+    padding: 20px;
+}
+
+.program-content h5 {
+    font-weight: 700;
+    color: var(--coklat);
+    margin-bottom: 15px;
+}
+
+.progress-info p {
+    font-size: 0.85rem;
+    color: var(--hijau-muda);
+    margin-top: 8px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.progress {
+    height: 8px;
+    background-color: var(--putih);
+    border-radius: 10px;
+}
+
+.progress-bar {
+    background-color: var(--hijau-tua);
+    border-radius: 10px;
+}
+
+.btn-donasi {
+    display: block;
+    width: 100%;
+    background: linear-gradient(135deg, var(--hijau-muda), var(--hijau-tua));
+    color: var(--putih);
+    text-align: center;
+    padding: 12px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    margin-top: 20px;
+    transition: 0.3s;
+}
+
+.btn-donasi:hover {
+    color: var(--putih);
+    box-shadow: 0 5px 15px rgba(45, 90, 39, 0.3);
+    opacity: 0.9;
+}
+
+.donation-area {
+    padding: 80px 0 100px 0;
+    background-color: var(--putih);
+}
+
+.payment-card {
+    background: var(--sage);
+    padding: 35px;
+    border-radius: 25px;
+    height: 100%;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--hijau-tua);
+    box-shadow: 0 0 0 0.25rem rgba(45, 90, 39, 0.1);
+}
+
+.form-label {
+    color: var(--hijau-tua);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, var(--hijau-muda), var(--hijau-tua));
+    color: var(--putih);
+    text-align: center;
+}
+
+.btn-success:hover {
+    color: var(--putih);
+    box-shadow: 0 5px 10px rgba(45, 90, 39, 0.3);
+    opacity: 0.9;
+}
