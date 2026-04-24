@@ -1,7 +1,7 @@
 :root{
     --coklat: #1B0C0C;
-    --hijau-tua: #2d5a27;
-    --hijau-muda: #1e3d1a;
+    --hijau-muda: #2d5a27;
+    --hijau-tua: #1e3d1a;
     --cream: #F2EDC2;
     --sage: #E9F5DB;
     --putih: #F6F4E8;
@@ -172,6 +172,7 @@ h1, h2, p {
 }
 
 .donation-area {
+    margin-top: -50px;
     padding: 80px 0 100px 0;
     background-color: var(--putih);
 }
@@ -202,4 +203,123 @@ h1, h2, p {
     color: var(--putih);
     box-shadow: 0 5px 10px rgba(45, 90, 39, 0.3);
     opacity: 0.9;
+}
+
+.kas-section {
+    background-color: var(--putih);
+}
+
+.kas-title {
+    font-weight: 700;
+    color: var(--hijau-tua);
+    margin-bottom: 40px;
+    text-align: left;
+}
+
+.summary-card {
+    background: white;
+    border-radius: 20px;
+    border: none;
+    transition: transform 0.3s;
+}
+
+.summary-card:hover {
+    transform: scale(1.05);
+}
+
+.summary-card-donasi {
+    background: var(--hijau-muda);
+    border-radius: 20px;
+    border: none;
+    transition: transform 0.3s;
+}
+
+.summary-card-donasi:hover {
+    transform: scale(1.05);
+}
+
+.table-container {
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.custom-table thead th {
+    background-color: transparent;
+    border-bottom: 2px solid #eee;
+    color: #666;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.custom-table tbody td {
+    font-size: 0.9rem;
+    padding: 12px 8px;
+    border-bottom: 1px solid #f8f9fa;
+}
+
+.btn-outline-pemasukan, .btn-outline-pengeluaran {
+    font-size: 0.75rem;
+    border-radius: 8px;
+}
+
+.text-pemasukan {
+    color: var(--hijau-muda) !important;
+}
+
+.btn-outline-pemasukan {
+    color: var(--hijau-muda);
+    border-color: var(--hijau-muda);
+    background-color: white;
+}
+
+.btn-outline-pemasukan:hover, .btn-outline-pemasukan.active {
+    background-color: var(--hijau-muda);
+    color: white;
+    border-color: var(--hijau-muda);
+}
+
+.text-pengeluaran {
+    color: maroon !important;
+}
+
+.btn-outline-pengeluaran {
+    color: maroon;
+    border-color: maroon;
+}
+
+.btn-outline-pengeluaran:hover, .btn-outline-pengeluaran.active {
+    background-color: maroon;
+    color: white;
+}
+
+.text-kas-1 {
+    font-size: var(--h3-size);
+    color: var(--coklat);
+}
+
+.text-kas-2 {
+    font-size: var(--h3-size);
+    color: var(--hijau-muda);
+}
+
+.text-kas-3 {
+    font-size: var(--h3-size);
+    color: maroon;
+}
+
+.text-kas-4 {
+    font-size: var(--h3-size);
+    color: white;
+}
+
+.arrow-up {
+    color: var(--hijau-muda);
+}
+
+.arrow-down {
+    color: maroon;
+}
+
+.bi-wallet2 {
+    color: var(--coklat);
 }
