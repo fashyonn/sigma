@@ -1,4 +1,4 @@
-:root{
+:root {
     --coklat: #1B0C0C;
     --hijau-muda: #2d5a27;
     --hijau-tua: #1e3d1a;
@@ -38,7 +38,9 @@ sub {
     text-decoration: none;
 }
 
-h1, h2, p {
+h1,
+h2,
+p {
     margin: 0;
     padding: 0;
 }
@@ -60,7 +62,7 @@ h1, h2, p {
     font-size: 3.5rem;
     font-weight: 700;
     text-align: center;
-    text-shadow: 2px 4px 15px rgba(0,0,0,0.8);
+    text-shadow: 2px 4px 15px rgba(0, 0, 0, 0.8);
     padding: 0 20px;
 }
 
@@ -80,7 +82,7 @@ h1, h2, p {
     border-radius: 30px;
     padding: 50px;
     text-align: center;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
     color: var(--coklat);
 }
 
@@ -106,10 +108,10 @@ h1, h2, p {
     background: white;
     border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
     transition: transform 0.3s ease;
     height: 100%;
-    border: 1px solid rgba(0,0,0,0.05);
+    border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .program-card:hover {
@@ -184,7 +186,8 @@ h1, h2, p {
     height: 100%;
 }
 
-.form-control:focus, .form-select:focus {
+.form-control:focus,
+.form-select:focus {
     border-color: var(--hijau-tua);
     box-shadow: 0 0 0 0.25rem rgba(45, 90, 39, 0.1);
 }
@@ -239,7 +242,7 @@ h1, h2, p {
 }
 
 .table-container {
-    border: 1px solid rgba(0,0,0,0.05);
+    border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .custom-table thead th {
@@ -257,7 +260,8 @@ h1, h2, p {
     border-bottom: 1px solid #f8f9fa;
 }
 
-.btn-outline-pemasukan, .btn-outline-pengeluaran {
+.btn-outline-pemasukan,
+.btn-outline-pengeluaran {
     font-size: 0.75rem;
     border-radius: 8px;
 }
@@ -272,7 +276,8 @@ h1, h2, p {
     background-color: white;
 }
 
-.btn-outline-pemasukan:hover, .btn-outline-pemasukan.active {
+.btn-outline-pemasukan:hover,
+.btn-outline-pemasukan.active {
     background-color: var(--hijau-muda);
     color: white;
     border-color: var(--hijau-muda);
@@ -287,7 +292,8 @@ h1, h2, p {
     border-color: maroon;
 }
 
-.btn-outline-pengeluaran:hover, .btn-outline-pengeluaran.active {
+.btn-outline-pengeluaran:hover,
+.btn-outline-pengeluaran.active {
     background-color: maroon;
     color: white;
 }
@@ -322,4 +328,86 @@ h1, h2, p {
 
 .bi-wallet2 {
     color: var(--coklat);
+}
+
+.login-body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    min-height: 100vh;
+    /*body setinggi halaman */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url(asset/masjidBackgroung.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Kotak Login (Ubah ke Transparan) */
+.login-box {
+    background: rgba(45, 90, 39, 0.4);
+    /* Hijau muda dengan transparansi */
+    backdrop-filter: blur(10px);
+    /* Efek kaca blur */
+    border: 1px solid rgba(242, 237, 194, 0.2);
+    /* Border tipis warna Cream */
+    padding: 40px;
+    border-radius: 25px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    color: var(--putih);
+    text-align: center;
+}
+
+.login-box h2 {
+    color: var(--cream);
+    /* Judul pake warna Cream biar kontras */
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.login-box p {
+    color: var(--sage);
+    font-size: 0.9rem;
+    margin-bottom: 30px;
+}
+
+/* Input Styling */
+.form-control {
+    background-color: var(--sage) !important;
+    /* Pake warna Sage */
+    border: none;
+    border-radius: 12px;
+    padding: 12px 15px;
+    color: var(--coklat);
+    /* Teks input warna coklat biar kebaca */
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 0.25rem rgba(242, 237, 194, 0.3);
+    border: 1px solid var(--cream);
+}
+
+/* Tombol Sign In */
+.btn-signin {
+    background-color: var(--coklat);
+    /* Tombol utama warna Coklat */
+    color: var(--putih);
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: none;
+    font-weight: 600;
+    margin-top: 20px;
+    transition: 0.3s;
+}
+
+.btn-signin:hover {
+    background-color: var(--hijau-tua);
+    /* Hover ke Hijau Tua */
+    color: var(--cream);
+    transform: translateY(-2px);
 }
