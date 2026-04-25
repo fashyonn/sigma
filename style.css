@@ -335,7 +335,6 @@ p {
     padding: 0;
     font-family: 'Segoe UI', sans-serif;
     min-height: 100vh;
-    /*body setinggi halaman */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -345,14 +344,10 @@ p {
     background-repeat: no-repeat;
 }
 
-/* Kotak Login (Ubah ke Transparan) */
 .login-box {
     background: rgba(45, 90, 39, 0.4);
-    /* Hijau muda dengan transparansi */
     backdrop-filter: blur(10px);
-    /* Efek kaca blur */
     border: 1px solid rgba(242, 237, 194, 0.2);
-    /* Border tipis warna Cream */
     padding: 40px;
     border-radius: 25px;
     width: 100%;
@@ -364,7 +359,6 @@ p {
 
 .login-box h2 {
     color: var(--cream);
-    /* Judul pake warna Cream biar kontras */
     font-weight: 700;
     margin-bottom: 5px;
 }
@@ -375,15 +369,12 @@ p {
     margin-bottom: 30px;
 }
 
-/* Input Styling */
 .form-control {
     background-color: var(--sage) !important;
-    /* Pake warna Sage */
     border: none;
     border-radius: 12px;
     padding: 12px 15px;
     color: var(--coklat);
-    /* Teks input warna coklat biar kebaca */
 }
 
 .form-control:focus {
@@ -391,10 +382,8 @@ p {
     border: 1px solid var(--cream);
 }
 
-/* Tombol Sign In */
 .btn-signin {
     background-color: var(--coklat);
-    /* Tombol utama warna Coklat */
     color: var(--putih);
     width: 100%;
     padding: 12px;
@@ -407,7 +396,158 @@ p {
 
 .btn-signin:hover {
     background-color: var(--hijau-tua);
-    /* Hover ke Hijau Tua */
     color: var(--cream);
     transform: translateY(-2px);
+}
+
+.dash-body {
+    background-color: var(--putih);
+    color: var(--coklat);
+    overflow-x: hidden;
+}
+
+/* Sidebar Styling */
+.sidebar {
+    background-color: var(--hijau-tua) !important;
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s;
+}
+
+.sidebar-heading b {
+    letter-spacing: 1.5px;
+    font-size: 1.2rem;
+}
+
+.list-group-item {
+    border: none !important;
+    padding: 12px 20px !important;
+    margin-bottom: 5px;
+    border-radius: 10px !important;
+    background-color: transparent !important;
+    color: var(--putih) !important;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.list-group-item i {
+    font-size: 1.1rem;
+}
+
+.list-group-item:hover {
+    background-color: rgba(242, 237, 194, 0.1) !important;
+    /* Efek hover cream transparan */
+    color: var(--cream) !important;
+    transform: translateX(5px);
+}
+
+.active-menu {
+    background-color: var(--hijau-muda) !important;
+    color: var(--cream) !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Card Statistik */
+.stat-card {
+    border: none;
+    transition: all 0.3s ease;
+    border-bottom: 4px solid transparent;
+}
+
+.stat-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08) !important;
+}
+
+.stat-card h2 {
+    font-size: 1.8rem;
+}
+
+/* Tabel Styling */
+.custom-admin-table thead th {
+    background-color: var(--sage);
+    color: var(--hijau-tua);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 15px;
+    border: none;
+}
+
+.custom-admin-table tbody td {
+    padding: 15px;
+    font-size: 0.9rem;
+    border-bottom: 1px solid #eee;
+}
+
+.custom-admin-table tbody tr:hover {
+    background-color: var(--putih);
+}
+
+/* Badge & Utility */
+.bg-sage {
+    background-color: var(--sage) !important;
+}
+
+.text-success {
+    color: var(--hijau-muda) !important;
+}
+
+.badge {
+    padding: 8px 12px;
+    font-weight: 600;
+}
+
+/* Tombol Kustom */
+.btn-success {
+    background-color: var(--hijau-muda) !important;
+    border: none;
+    transition: 0.3s;
+}
+
+.btn-success:hover {
+    background-color: var(--hijau-tua) !important;
+    transform: scale(1.05);
+}
+
+.btn-coklat {
+    background-color: var(--coklat) !important;
+    color: var(--putih) !important;
+    border: none;
+    transition: 0.3s;
+}
+
+.btn-coklat:hover {
+    background-color: #000 !important;
+    color: var(--cream) !important;
+    transform: scale(1.05);
+}
+
+.btn-outline-dark {
+    border-color: var(--coklat);
+    color: var(--coklat);
+}
+
+.btn-outline-dark:hover {
+    background-color: var(--coklat);
+    color: var(--putih);
+}
+
+/* Navbar */
+.navbar {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.navbar h5 {
+    color: var(--hijau-tua);
+}
+
+.logo {
+    background-color: var(--putih);
+    margin-left: auto;
+    margin-right: auto;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 3px solid rgba(242, 237, 194, 0.3);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
