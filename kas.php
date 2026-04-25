@@ -1,27 +1,31 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Kas</title>
-</head>
-<body>
-
-	<form>
-		<label for="Jenis"></label>
-		<select>
-			<option value="Kas Masuk">Kas Masuk</option>
-			<option value="Kas Keluar">Kas Keluar</option>
-		</select> <br><br>
-		<label>Kategori</label>
-		<input type="text" name="kategori"><br>
-		<label>Keterangan</label>
-		<input type="text" name="keterangan"><br>
-		<label>Nominal</label>
-		<input type="number" name="nominal"><br>
-		<input type="submit" name="">
-
-	</form>
-
-</body>
-</html>
+<?php
+include "koneksi.php";
+$query = mysqli_query($connect, "SELECT * from kas");
+?>
+	<table border="1" cellpadding="8">
+		<tr>
+			<th>Kas ID</th>
+			<th>Tanggal</th>
+			<th>Jenis</th>			
+			<th>Kategori</th>
+			<th>Nominal</th>
+			<th>Keterangan</th>
+			<th>DonasiID</th>
+			<th>Aksi</th>
+		</tr>
+<?php
+while ($data=mysqli_fetch_array($query)) {
+?>
+		<tr>
+			<td><?=$data['kasID']?></td>
+			<td><?=$data['tanggal']?></td>
+			<td><?=$data['jenis']?></td>
+			<td><?=$data['kategori']?></td>
+			<td><?= "Rp " . number_format($data['nominal'], 2, ',', '.'); ?></td>
+			<td><?=$data['keterangan']?></td>	
+			<td><?=$data['donasiID']?></td>
+		</tr>
+<?php
+}
+?>
+	</table>

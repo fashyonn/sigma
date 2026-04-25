@@ -1,62 +1,53 @@
 <?php
 include "koneksi.php";
-$query = mysqli_query($connect, "SELECT * from verifikasi");
-$data = mysqli_fetch_array($query);
-echo uniqid(); 
-echo mt_rand(100, 999);
+$query = mysqli_query($connect, "SELECT * from donasi");
 
 if (isset($_GET['aksi']) && $_GET['aksi'] == 'verifikasi') {
     $id = $_GET['id'];
-    // Update kolom 'terverifikasi' menjadi 1 (atau teks 'Ya')
-    // mysqli_query($connect, "UPDATE tabel_donasi SET terverifikasi = '1' WHERE DonasiID = '$id_verif'");
-    mysqli_query($connect, "UPDATE verifikasi SET statusVerifikasi = 'Terverifikasi' WHERE verifikasiID = '$id'");
-    mysqli_query($connect, "INSERT INTO kas (tanggal, jenis, kategori, keterangan, jumlah, verifikasiID)
-               SELECT tanggal, 'Kas Masuk','Donasi','-', jumlah, verifikasiID
-               FROM verifikasi 
-               WHERE verifikasiID = '$id'");
-    // Redirect agar URL bersih kembali
+    mysqli_query($connect, "UPDATE donasi SET status = 'Terverifikasi' WHERE donasiID = '$id'");
+    mysqli_query($connect, "INSERT INTO kas(tanggal,jenis,kategori,nominal,keterangan,donasiID)
+               SELECT tanggal,'Kas Masuk','Donasi',nominal,'-', donasiID
+               FROM donasi 
+               WHERE donasiID = '$id'");
     header("Location: verifikasi.php");
     exit;
 }
 ?>
-
-<table border="1" cellpadding="5">
+<table border="1" cellpadding="8">
 	<tr>
 		<th>Donasi ID</th>
 		<th>Nama Donatur</th>
-		<th>Tangal Donasi</th>			
-		<th>Jenis Donasi</th>
-		<th>Jumlah</th>
+		<th>Tanggal Donasi</th>			
+		<th>Nominal</th>
+		<th>Keterangan</th>
 		<th>Nomor Bukti</th>
-		<th>Terverfikasi</th>
+		<th>Status</th>
 		<th>Aksi</th>
 	</tr>
 <?php
 	while ($data = mysqli_fetch_array($query)) {
 ?>
 		<tr>
-			<td><?= $data['verifikasiID']?></td>
+			<td><?= $data['donasiID']?></td>
 			<td><?= $data['nama']?></td>
 			<td><?= $data['tanggal']?></td>
-			<td><?= $data['jenis']?></td>
-			<td><?= $data['jumlah']?></td>
-			<td><?= $data['noBukti']?></td>
+			<td><?= "Rp " . number_format($data['nominal'], 2, ',', '.'); ?></td>
+			<td><?= $data['keterangan']?></td>
+			<td><?= $data['noRef']?></td>
 			<td>
-                <?php if ($data['statusVerifikasi'] == 'Terverifikasi'): ?>
-                    <b style="color: green;">Terverifikasi</b>
+                <?php if ($data['status'] == 'Terverifikasi'): ?>
+                    <i style="padding: 5px 10px; border-radius: 12px; background: green; color: white; ">Terverifikasi</i>
                 <?php else: ?>
-                    <i style="color: red;">Belum Terverifikasi</i>
+                    <i style="padding: 5px 10px; border-radius: 12px; background: red; color: white;">Belum Terverifikasi</i>
                 <?php endif; ?>
             </td>
             <td>
-                <?php if ($data['statusVerifikasi'] == 'Belum' || empty($data['terverifikasi'])): ?>
-                    <a href="verifikasi.php?aksi=verifikasi&id=<?= $data['verifikasiID']; ?>" 
+                <?php if ($data['status'] == 'Belum Terverifikasi' || empty($data['status'])): ?>
+                    <a href="verifikasi.php?aksi=verifikasi&id=<?= $data['donasiID']; ?>" 
                        onclick="return confirm('Verifikasi donasi ini?')"
-                       style="padding: 5px 10px; background: #4CAF50; color: white; text-decoration: none; border-radius: 3px;">
+                       style="padding: 5px 10px; background: black; color: white; text-decoration: none; border-radius: 3px;">
                        Verifikasi
-                    </a>
-                <?php else: ?>
-                    <span style="color: #888;">Selesai</span>
+                    </a>                    
                 <?php endif; ?>
             </td>
 		</tr>
