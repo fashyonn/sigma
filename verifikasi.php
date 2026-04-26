@@ -6,7 +6,7 @@ if (isset($_GET['aksi']) && $_GET['aksi'] == 'verifikasi') {
     $id = $_GET['id'];
     mysqli_query($connect, "UPDATE donasi SET status = 'Terverifikasi' WHERE donasiID = '$id'");
     mysqli_query($connect, "INSERT INTO kas(tanggal,jenis,kategori,nominal,keterangan,donasiID)
-               SELECT tanggal,'Kas Masuk','Donasi',nominal,'-', donasiID
+               SELECT tanggal,'Kas Masuk','Donasi',nominal, program , donasiID
                FROM donasi 
                WHERE donasiID = '$id'");
     header("Location: verifikasi.php");
@@ -19,7 +19,7 @@ if (isset($_GET['aksi']) && $_GET['aksi'] == 'verifikasi') {
 		<th>Nama Donatur</th>
 		<th>Tanggal Donasi</th>			
 		<th>Nominal</th>
-		<th>Keterangan</th>
+		<th>Program</th>
 		<th>Nomor Bukti</th>
 		<th>Status</th>
 		<th>Aksi</th>
@@ -32,7 +32,7 @@ if (isset($_GET['aksi']) && $_GET['aksi'] == 'verifikasi') {
 			<td><?= $data['nama']?></td>
 			<td><?= $data['tanggal']?></td>
 			<td><?= "Rp " . number_format($data['nominal'], 2, ',', '.'); ?></td>
-			<td><?= $data['keterangan']?></td>
+			<td><?= $data['program']?></td>
 			<td><?= $data['noRef']?></td>
 			<td>
                 <?php if ($data['status'] == 'Terverifikasi'): ?>

@@ -4,9 +4,7 @@
 	$program = $_POST['program'];
 	$nominal = $_POST['nominal'];
 	$bukti = $_POST['noRef'];
-
 require "koneksi.php";
-$query = mysqli_query($connect, "INSERT INTO donasi(nama, tanggal, nominal, keterangan, noRef) VALUES ('$nama','$tanggal','$nominal', '$program','$bukti'); ");
-
+$query = mysqli_query($connect, "INSERT INTO donasi(tanggal, nama , nominal, keterangan, noRef) VALUES ('$tanggal','$nama','$nominal', '$program','$bukti'); ");
 require "verifikasi.php";
 ?>

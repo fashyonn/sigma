@@ -1,4 +1,11 @@
-
+<?php
+require 'koneksi.php';
+if (isset($_GET['aksi']) && $_GET['aksi'] == 'tambahDonasi') {
+    mysqli_query($connect, "INSERT INTO donasi(tanggal, nama, program, nominal, noRef) VALUES ('{$_POST['tanggal']}','{$_POST['nama']}','{$_POST['program']}', '{$_POST['nominal']}','{$_POST['noRef']}')");
+    header("Location: index.php");
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,7 +22,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-	<form id="formDonasi" action="input.php" method="POST">
+	<form id="formDonasi" action="index.php?aksi=tambahDonasi" method="POST">
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label small fw-bold">Nama Lengkap</label>
