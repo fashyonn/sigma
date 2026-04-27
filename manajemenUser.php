@@ -1,40 +1,45 @@
 <?php
 include "koneksi.php";
 	$query = mysqli_query($connect, "SELECT * from user");
-
 	if (isset($_GET['aksi']) && $_GET['aksi'] == 'tambahAdmin') {
-    mysqli_query($connect, "INSERT INTO user(username, password, email, role, status) VALUES ('{$_POST['username']}','{$_POST['password']}','{$_POST['email']}', '{$_POST['role']}','{$_POST['status']}')");
-    header("Location: manajemenUser.php");
-    exit;
-}
+	    mysqli_query($connect, "INSERT INTO user(username, password, email, role, status) VALUES ('{$_POST['username']}','{$_POST['password']}','{$_POST['email']}', '{$_POST['role']}','{$_POST['status']}')");
+	    header("Location: manajemenUser.php");
+	    exit;
+	}
 	if (isset($_GET['aksi']) && $_GET['aksi'] == 'simpanAdmin') {
-    $id = $_GET['id'];
-    mysqli_query($connect, "UPDATE user SET username='{$_POST['username']}', password='{$_POST['password']}', email='{$_POST['email']}', role='{$_POST['role']}', status='{$_POST['status']}' where userID = '$id'");
-    header("Location: manajemenUser.php");
-    exit;
-}
+	    $id = $_GET['id'];
+	    mysqli_query($connect, "UPDATE user SET username='{$_POST['username']}', password='{$_POST['password']}', email='{$_POST['email']}', role='{$_POST['role']}', status='{$_POST['status']}' where userID = '$id'");
+	    header("Location: manajemenUser.php");
+	    exit;
+	}
 	if (isset($_GET['aksi']) && $_GET['aksi'] == 'hapus'){
-    $id = $_GET['id'];
-    mysqli_query($connect, "DELETE FROM user WHERE userID = '$id'");
-    header("Location: manajemenUser.php");
-    exit;
-}
+	    $id = $_GET['id'];
+	    mysqli_query($connect, "DELETE FROM user WHERE userID = '$id'");
+	    header("Location: manajemenUser.php");
+	    exit;
+	}
 ?>
+
+
+
     <?php if(isset($_GET['aksi'])&& $_GET['aksi'] == 'inputAdmin'):?>
-    <form action="manajemenUser.php?aksi=tambahAdmin" method="POST">
-    	<input type="text" name="username" placeholder="username"><br>
-    	<input type="text" name="password" placeholder="password"><br>
-    	<input type="text" name="email" placeholder="email"><br>
-    	<select name="role">
-    		<option value="administrator">Administrator</option>
-    		<option value="bendahara">Bendahara</option>
-    	</select><br>
-    	<select name="status">
-    		<option value="aktif">Aktif</option>
-    		<option value="nonaktif">Nonaktif</option>
-    	</select><br>
-    	<button type="submit">Submit</button>
-    </form>
+	    <form action="manajemenUser.php?aksi=tambahAdmin" method="POST">
+	    	<input type="text" name="username" placeholder="username"><br>
+	    	<input type="text" name="password" placeholder="password"><br>
+	    	<input type="text" name="email" placeholder="email"><br>
+	    	<select name="role">
+	    		<option value="administrator">Administrator</option>
+	    		<option value="bendahara">Bendahara</option>
+	    	</select><br>
+	    	<select name="status">
+	    		<option value="aktif">Aktif</option>
+	    		<option value="nonaktif">Nonaktif</option>
+	    	</select><br>
+	    	<button type="submit">Submit</button>
+	    </form>
+
+
+
 
 	<?php elseif(isset($_GET['aksi'])&& $_GET['aksi'] == 'editAdmin'): 
 		$id = $_GET['id'];
@@ -59,45 +64,41 @@ include "koneksi.php";
 		</form>
 
 
+
+
 	<?php else:?>
-  <a href="manajemenUser.php?aksi=inputAdmin" 
-     style="padding: 5px 10px; background: blue; color: white; text-decoration: none; border-radius: 3px;">
-     Tambah
-  </a><br> <br> 
-
-<table border="1" cellpadding="8">
-		<tr>
-			<th>User ID</th>
-			<th>Username</th>
-			<th>Email</th>			
-			<th>Role</th>
-			<th>Status</th>
-			<th>Aksi</th>
-		</tr>
-<?php
-while ($data=mysqli_fetch_assoc($query)) {
-?>
-		<tr>
-			<td><?=$data['userID']?></td>
-			<td><?=$data['username']?></td>
-			<td><?=$data['email']?></td>
-			<td><?=$data['role']?></td>
-			<td><?=$data['status']?></td>	
-			<td>
-                    <a href="manajemenUser.php?aksi=editAdmin&id=<?=$data['userID']?>" 
-                       style="padding: 5px 10px; background: black; color: white; text-decoration: none; border-radius: 3px;">
-                       Edit
-                    </a>  
-                    <a href="manajemenUser.php?aksi=hapus&id=<?=$data['userID']?>" 
-                       onclick="return confirm('Hapus record ini?')"
-                       style="padding: 5px 10px; background: black; color: white; text-decoration: none; border-radius: 3px;">
-                       Hapus
-                    </a>  		
-			</td>
-		</tr>
-
-<?php
-}
-?>
-	</table>
+		<a href="manajemenUser.php?aksi=inputAdmin" 
+		     style="padding: 5px 10px; background: blue; color: white; text-decoration: none; border-radius: 3px;">
+		     Tambah
+		</a><br> <br> 
+		<table border="1" cellpadding="8">
+			<tr>
+				<th>User ID</th>
+				<th>Username</th>
+				<th>Email</th>			
+				<th>Role</th>
+				<th>Status</th>
+				<th>Aksi</th>
+			</tr>
+			<?php while ($data=mysqli_fetch_assoc($query)) { ?>
+				<tr>
+					<td><?=$data['userID']?></td>
+					<td><?=$data['username']?></td>
+					<td><?=$data['email']?></td>
+					<td><?=$data['role']?></td>
+					<td><?=$data['status']?></td>	
+					<td>
+		                    <a href="manajemenUser.php?aksi=editAdmin&id=<?=$data['userID']?>" 
+		                       style="padding: 5px 10px; background: black; color: white; text-decoration: none; border-radius: 3px;">
+		                       Edit
+		                    </a>  
+		                    <a href="manajemenUser.php?aksi=hapus&id=<?=$data['userID']?>" 
+		                       onclick="return confirm('Hapus record ini?')"
+		                       style="padding: 5px 10px; background: black; color: white; text-decoration: none; border-radius: 3px;">
+		                       Hapus
+		                    </a>  		
+					</td>
+				</tr>
+			<?php } ?>
+		</table>
 	<?php endif; ?>
