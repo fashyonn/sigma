@@ -1,27 +1,48 @@
 <?php
 include "koneksi.php";
-$query = mysqli_query($connect, "SELECT * from kas");
-if (isset($_GET['aksi']) && $_GET['aksi'] == 'hapus') {
-    $id = $_GET['id'];
-    mysqli_query($connect, "DELETE FROM kas WHERE kasID = '$id'");
-    header("Location: kas.php");
-    exit;
+if(isset($_GET['tanggalMulai']) && isset($_GET['tanggalSelesai'])){
+	$query = mysqli_query($connect, "SELECT * FROM(
+                SELECT 
+                    kasID, tanggal, jenis, kategori, nominal, keterangan,
+                    SUM(CASE 
+                        WHEN jenis = 'Kas Masuk' THEN nominal 
+                        WHEN jenis = 'Kas Keluar' THEN -nominal 
+                        ELSE 0 
+                    END) OVER (ORDER BY tanggal ASC, kasID ASC) AS saldo
+                FROM kas
+            ) AS t 
+            WHERE tanggal BETWEEN '{$_GET['tanggalMulai']}' AND '{$_GET['tanggalSelesai']}'
+            ORDER BY tanggal ASC");
+}
+else{
+	$query = mysqli_query($connect, "SELECT *, sum(case 
+                when jenis = 'Kas Masuk' then nominal 
+                when jenis = 'Kas Keluar' then -nominal 
+                else 0 
+            end) over (order by tanggal asc, kasID asc) AS saldo
+        from kas");
 }
 ?>
-  <a href="edit.php?aksi=inputKas" 
-     style="padding: 5px 10px; background: blue; color: white; text-decoration: none; border-radius: 3px;">
-     input
-  </a> 
+	<form method="GET" action="">
+		<label>Data tanggal:</label>
+		<input type="date" name="tanggalMulai" value="<?= $_GET['tanggalMulai'] ?? '' ?>" required>
+
+		<label>sampai</label>
+		<input type="date" name="tanggalSelesai" value="<?= $_GET['tanggalSelesai'] ?? '' ?>" required>
+
+		<button type="submit">Cari Data</button>
+		<a href="?" style="padding: 3px 10px; background: black; color: white; text-decoration: none; border-radius: 3px;">Reset</a>
+	</form>
+
 	<table border="1" cellpadding="8">
 		<tr>
 			<th>Kas ID</th>
 			<th>Tanggal</th>
 			<th>Jenis</th>			
 			<th>Kategori</th>
-			<th>Nominal</th>
 			<th>Keterangan</th>
-			<th>DonasiID</th>
-			<th>Aksi</th>
+			<th>Nominal</th>
+			<th>Saldo</th>
 		</tr>
 <?php
 while ($data=mysqli_fetch_array($query)) {
@@ -31,20 +52,9 @@ while ($data=mysqli_fetch_array($query)) {
 			<td><?=$data['tanggal']?></td>
 			<td><?=$data['jenis']?></td>
 			<td><?=$data['kategori']?></td>
-			<td><?= "Rp " . number_format($data['nominal'], 2, ',', '.'); ?></td>
 			<td><?=$data['keterangan']?></td>	
-			<td><?=$data['donasiID']?></td>
-			<td>
-                    <a href="edit.php?aksi=editKas&id=<?= $data['kasID']; ?>" 
-                       style="padding: 5px 10px; background: black; color: white; text-decoration: none; border-radius: 3px;">
-                       Edit
-                    </a>  
-                    <a href="kas.php?aksi=hapus&id=<?= $data['kasID']; ?>" 
-                       onclick="return confirm('Hapus record ini?')"
-                       style="padding: 5px 10px; background: black; color: white; text-decoration: none; border-radius: 3px;">
-                       Hapus
-                    </a>  		
-			</td>
+			<td style="color: <?= ($data['jenis'] == 'Kas Masuk') ? 'green' : 'red'; ?>"><?= "Rp " . number_format($data['nominal'], 2, ',', '.'); ?></td>
+			<td><?= "Rp " . number_format($data['saldo'], 2, ',', '.'); ?></td>
 
 		</tr>
 <?php

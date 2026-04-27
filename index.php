@@ -1,5 +1,17 @@
 <?php
 require 'koneksi.php';
+
+$total = mysqli_query($connect, "SELECT 
+                SUM(CASE WHEN jenis = 'Kas Masuk' THEN nominal ELSE 0 END) AS totalMasuk,
+                SUM(CASE WHEN jenis = 'Kas Keluar' THEN nominal ELSE 0 END) AS totalKeluar
+              FROM kas");
+$data_total = mysqli_fetch_assoc($total);
+
+$pemasukan  = $data_total['totalMasuk'] ?? 0;
+$pengeluaran = $data_total['totalKeluar'] ?? 0;
+$saldo  = $pemasukan - $pengeluaran;
+
+
 if (isset($_GET['aksi']) && $_GET['aksi'] == 'tambahDonasi') {
     mysqli_query($connect, "INSERT INTO donasi(tanggal, nama, program, nominal, noRef) VALUES ('{$_POST['tanggal']}','{$_POST['nama']}','{$_POST['program']}', '{$_POST['nominal']}','{$_POST['noRef']}')");
     header("Location: index.php");
@@ -22,6 +34,12 @@ if (isset($_GET['aksi']) && $_GET['aksi'] == 'tambahDonasi') {
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+    <h3>Pemasukan: <?=$pemasukan?></h3>
+    <h3>Pengeluaran: <?=$pengeluaran?></h3>
+    <h3>Saldo: <?=$saldo?></h3><br>
+
+
 	<form id="formDonasi" action="index.php?aksi=tambahDonasi" method="POST">
                             <div class="row">
                                 <div class="col-md-6 mb-3">
