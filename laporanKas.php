@@ -90,7 +90,7 @@ else{
 			<th>Aksi</th>
 		</tr>
 <?php
-while ($data=mysqli_fetch_array($query)) {
+while ($data=mysqli_fetch_assoc($query)) {
 ?>
 		<tr>
 			<td><?=$data['kasID']?></td>
