@@ -2,8 +2,7 @@
 include "koneksi.php";
 	if(isset($_GET['tanggalMulai']) && isset($_GET['tanggalSelesai'])){
 		$query = mysqli_query($connect, "SELECT * FROM(
-			SELECT 
-			  kasID, tanggal, jenis, kategori, nominal, keterangan,
+			SELECT *,
 			  SUM(CASE 
 			      when jenis = 'Kas Masuk' then nominal 
 			      when jenis = 'Kas Keluar' then -nominal 
@@ -41,15 +40,17 @@ include "koneksi.php";
 			<th>Nominal</th>
 			<th>Saldo</th>
 		</tr>
-		<?php while ($data=mysqli_fetch_array($query)) { ?>
+		<?php while ($data=mysqli_fetch_array($query)) :
+			$queryProgram= mysqli_query($connect, "SELECT * from program WHERE programID = '{$data['programID']}'");
+			$program = mysqli_fetch_assoc($queryProgram); ?>
 			<tr>
 				<td><?=$data['kasID']?></td>
 				<td><?=$data['tanggal']?></td>
 				<td><?=$data['jenis']?></td>
-				<td><?=$data['kategori']?></td>
+				<td><?= $program['nama']?></td>
 				<td><?=$data['keterangan']?></td>	
 				<td style="color: <?= ($data['jenis'] == 'Kas Masuk') ? 'green' : 'red'; ?>"><?= "Rp " . number_format($data['nominal'], 2, ',', '.'); ?></td>
 				<td><?= "Rp " . number_format($data['saldo'], 2, ',', '.'); ?></td>
 			</tr>
-		<?php } ?>
+		<?php endwhile; ?>
 	</table>
