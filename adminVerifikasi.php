@@ -1,5 +1,10 @@
 <?php
 include "koneksi.php";
+    session_start();
+    if(!isset($_SESSION['userID'])){
+        header("Location: login.php");
+    }
+
 	$query = mysqli_query($connect, "SELECT * from donasi");
 	$queryProgram = mysqli_query($connect, "SELECT * from program");
 	if (isset($_GET['aksi']) && $_GET['aksi'] == 'verifikasi') {
@@ -53,3 +58,4 @@ include "koneksi.php";
 			</tr>
 		<?php endwhile; ?>
 	</table>
+	    <a href="logout.php">LOGOUT BRO</a>

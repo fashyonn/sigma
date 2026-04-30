@@ -1,5 +1,11 @@
 <?php
 include "koneksi.php";
+    session_start();
+    if(!isset($_SESSION['userID'])){
+        header("Location: login.php");
+    }
+
+
 	$total = mysqli_query($connect, "SELECT 
 		sum(case when jenis = 'Kas Masuk' then nominal else 0 end) AS totalMasuk,
 		sum(case when jenis = 'Kas Keluar' then nominal else 0 end) AS totalKeluar
@@ -173,3 +179,4 @@ include "koneksi.php";
 	</table>
 
 	<?php endif; ?>
+    <a href="logout.php">LOGOUT BRO</a>

@@ -1,5 +1,6 @@
 <?php
 require 'koneksi.php';
+
     $total = mysqli_query($connect, "SELECT 
         SUM(case when jenis = 'Kas Masuk' then nominal else 0 end) AS totalMasuk,
         SUM(case when jenis = 'Kas Keluar' then nominal else 0 end) AS totalKeluar
@@ -32,3 +33,4 @@ require 'koneksi.php';
         <input type="text" name="noRef" class="form-control" placeholder="Nomor referensi/ID" required>
         <button type="submit" class="btn btn-success w-100 py-3 mt-3 rounded-pill fw-bold">Kirim Konfirmasi</button>
     </form>
+

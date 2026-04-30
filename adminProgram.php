@@ -1,5 +1,10 @@
 <?php
 include "koneksi.php";
+    session_start();
+    if(!isset($_SESSION['userID'])){
+        header("Location: login.php");
+    }
+
 	$query = mysqli_query($connect, "SELECT * from program");
 	if (isset($_GET['aksi']) && $_GET['aksi'] == 'tambahProgram') {
 	    mysqli_query($connect, "INSERT INTO program(nama, deskripsi, target, status) VALUES ('{$_POST['nama']}','{$_POST['deskripsi']}','{$_POST['target']}','{$_POST['status']}')");
@@ -85,3 +90,4 @@ include "koneksi.php";
 		</table>
 
 <?php endif;?>
+    <a href="logout.php">LOGOUT BRO</a>

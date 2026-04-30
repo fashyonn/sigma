@@ -1,5 +1,10 @@
 <?php
 include "koneksi.php";
+    session_start();
+    if(!isset($_SESSION['userID'])){
+        header("Location: login.php");
+    }
+
 	$query = mysqli_query($connect, "SELECT * from user");
 	if (isset($_GET['aksi']) && $_GET['aksi'] == 'tambahAdmin') {
 	    mysqli_query($connect, "INSERT INTO user(username, password, email, role, status) VALUES ('{$_POST['username']}','{$_POST['password']}','{$_POST['email']}', '{$_POST['role']}','{$_POST['status']}')");
@@ -102,3 +107,4 @@ include "koneksi.php";
 			<?php } ?>
 		</table>
 	<?php endif; ?>
+    <a href="logout.php">LOGOUT BRO</a>
