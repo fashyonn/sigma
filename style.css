@@ -1,0 +1,553 @@
+:root {
+    --coklat: #1B0C0C;
+    --hijau-muda: #2d5a27;
+    --hijau-tua: #1e3d1a;
+    --cream: #F2EDC2;
+    --sage: #E9F5DB;
+    --putih: #F6F4E8;
+
+    --h1-size: 32px;
+    --h2-size: 24px;
+    --h3-size: 18px;
+    --h4-size: 16px;
+    --h5-size: 14px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    background-color: var(--sage);
+}
+
+span {
+    font-family: 'Segoe UI', sans-serif;
+    color: var(--hijau-tua);
+    font-size: var(--h2-size);
+    font-weight: 900;
+}
+
+sub {
+    font-family: 'Segoe UI', sans-serif;
+    color: var(--hijau-tua);
+}
+
+.navbar-brand {
+    text-decoration: none;
+}
+
+h1,
+h2,
+p {
+    margin: 0;
+    padding: 0;
+}
+
+.hero-banner {
+    width: 100%;
+    height: 90vh;
+    background-image: url('asset/masjid.png');
+    background-size: cover;
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-title {
+    color: var(--putih);
+    font-size: 3.5rem;
+    font-weight: 700;
+    text-align: center;
+    text-shadow: 2px 4px 15px rgba(0, 0, 0, 0.8);
+    padding: 0 20px;
+}
+
+.about-section {
+    background-color: var(--putih);
+    padding: 80px 0;
+    min-height: 400px;
+}
+
+.glass-box {
+    margin-top: -30px;
+    margin-bottom: -30px;
+    background: var(--sage);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 30px;
+    padding: 50px;
+    text-align: center;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+    color: var(--coklat);
+}
+
+.glass-box h2 {
+    color: var(--hijau-tua);
+    letter-spacing: 2px;
+}
+
+.programs-section {
+    padding: 10px 0;
+    background-color: var(--putih);
+}
+
+.section-title {
+    margin-top: -50px;
+    font-weight: 700;
+    color: var(--hijau-tua);
+    margin-bottom: 40px;
+    text-align: left;
+}
+
+.program-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+    height: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.program-card:hover {
+    transform: translateY(-10px);
+}
+
+.program-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.program-content {
+    padding: 20px;
+}
+
+.program-content h5 {
+    font-weight: 700;
+    color: var(--coklat);
+    margin-bottom: 15px;
+}
+
+.progress-info p {
+    font-size: 0.85rem;
+    color: var(--hijau-muda);
+    margin-top: 8px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.progress {
+    height: 8px;
+    background-color: var(--putih);
+    border-radius: 10px;
+}
+
+.progress-bar {
+    background-color: var(--hijau-tua);
+    border-radius: 10px;
+}
+
+.btn-donasi {
+    display: block;
+    width: 100%;
+    background: linear-gradient(135deg, var(--hijau-muda), var(--hijau-tua));
+    color: var(--putih);
+    text-align: center;
+    padding: 12px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    margin-top: 20px;
+    transition: 0.3s;
+}
+
+.btn-donasi:hover {
+    color: var(--putih);
+    box-shadow: 0 5px 15px rgba(45, 90, 39, 0.3);
+    opacity: 0.9;
+}
+
+.donation-area {
+    margin-top: -50px;
+    padding: 80px 0 100px 0;
+    background-color: var(--putih);
+}
+
+.payment-card {
+    background: var(--sage);
+    padding: 35px;
+    border-radius: 25px;
+    height: 100%;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--hijau-tua);
+    box-shadow: 0 0 0 0.25rem rgba(45, 90, 39, 0.1);
+}
+
+.form-label {
+    color: var(--hijau-tua);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, var(--hijau-muda), var(--hijau-tua));
+    color: var(--putih);
+    text-align: center;
+}
+
+.btn-success:hover {
+    color: var(--putih);
+    box-shadow: 0 5px 10px rgba(45, 90, 39, 0.3);
+    opacity: 0.9;
+}
+
+.kas-section {
+    background-color: var(--putih);
+}
+
+.kas-title {
+    font-weight: 700;
+    color: var(--hijau-tua);
+    margin-bottom: 40px;
+    text-align: left;
+}
+
+.summary-card {
+    background: white;
+    border-radius: 20px;
+    border: none;
+    transition: transform 0.3s;
+}
+
+.summary-card:hover {
+    transform: scale(1.05);
+}
+
+.summary-card-donasi {
+    background: var(--hijau-muda);
+    border-radius: 20px;
+    border: none;
+    transition: transform 0.3s;
+}
+
+.summary-card-donasi:hover {
+    transform: scale(1.05);
+}
+
+.table-container {
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.custom-table thead th {
+    background-color: transparent;
+    border-bottom: 2px solid #eee;
+    color: #666;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.custom-table tbody td {
+    font-size: 0.9rem;
+    padding: 12px 8px;
+    border-bottom: 1px solid #f8f9fa;
+}
+
+.btn-outline-pemasukan,
+.btn-outline-pengeluaran {
+    font-size: 0.75rem;
+    border-radius: 8px;
+}
+
+.text-pemasukan {
+    color: var(--hijau-muda) !important;
+}
+
+.btn-outline-pemasukan {
+    color: var(--hijau-muda);
+    border-color: var(--hijau-muda);
+    background-color: white;
+}
+
+.btn-outline-pemasukan:hover,
+.btn-outline-pemasukan.active {
+    background-color: var(--hijau-muda);
+    color: white;
+    border-color: var(--hijau-muda);
+}
+
+.text-pengeluaran {
+    color: maroon !important;
+}
+
+.btn-outline-pengeluaran {
+    color: maroon;
+    border-color: maroon;
+}
+
+.btn-outline-pengeluaran:hover,
+.btn-outline-pengeluaran.active {
+    background-color: maroon;
+    color: white;
+}
+
+.text-kas-1 {
+    font-size: var(--h3-size);
+    color: var(--coklat);
+}
+
+.text-kas-2 {
+    font-size: var(--h3-size);
+    color: var(--hijau-muda);
+}
+
+.text-kas-3 {
+    font-size: var(--h3-size);
+    color: maroon;
+}
+
+.text-kas-4 {
+    font-size: var(--h3-size);
+    color: white;
+}
+
+.arrow-up {
+    color: var(--hijau-muda);
+}
+
+.arrow-down {
+    color: maroon;
+}
+
+.bi-wallet2 {
+    color: var(--coklat);
+}
+
+.login-body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url(asset/masjidBackgroung.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.login-box {
+    background: rgba(45, 90, 39, 0.4);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(242, 237, 194, 0.2);
+    padding: 40px;
+    border-radius: 25px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    color: var(--putih);
+    text-align: center;
+}
+
+.login-box h2 {
+    color: var(--cream);
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.login-box p {
+    color: var(--sage);
+    font-size: 0.9rem;
+    margin-bottom: 30px;
+}
+
+.form-control {
+    background-color: var(--sage) !important;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 15px;
+    color: var(--coklat);
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 0.25rem rgba(242, 237, 194, 0.3);
+    border: 1px solid var(--cream);
+}
+
+.btn-signin {
+    background-color: var(--coklat);
+    color: var(--putih);
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: none;
+    font-weight: 600;
+    margin-top: 20px;
+    transition: 0.3s;
+}
+
+.btn-signin:hover {
+    background-color: var(--hijau-tua);
+    color: var(--cream);
+    transform: translateY(-2px);
+}
+
+.dash-body {
+    background-color: var(--putih);
+    color: var(--coklat);
+    overflow-x: hidden;
+}
+
+/* Sidebar Styling */
+.sidebar {
+    background-color: var(--hijau-tua) !important;
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s;
+}
+
+.sidebar-heading b {
+    letter-spacing: 1.5px;
+    font-size: 1.2rem;
+}
+
+.list-group-item {
+    border: none !important;
+    padding: 12px 20px !important;
+    margin-bottom: 5px;
+    border-radius: 10px !important;
+    background-color: transparent !important;
+    color: var(--putih) !important;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.list-group-item i {
+    font-size: 1.1rem;
+}
+
+.list-group-item:hover {
+    background-color: rgba(242, 237, 194, 0.1) !important;
+    /* Efek hover cream transparan */
+    color: var(--cream) !important;
+    transform: translateX(5px);
+}
+
+.active-menu {
+    background-color: var(--hijau-muda) !important;
+    color: var(--cream) !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Card Statistik */
+.stat-card {
+    border: none;
+    transition: all 0.3s ease;
+    border-bottom: 4px solid transparent;
+}
+
+.stat-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08) !important;
+}
+
+.stat-card h2 {
+    font-size: 1.8rem;
+}
+
+/* Tabel Styling */
+.custom-admin-table thead th {
+    background-color: var(--sage);
+    color: var(--hijau-tua);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 15px;
+    border: none;
+}
+
+.custom-admin-table tbody td {
+    padding: 15px;
+    font-size: 0.9rem;
+    border-bottom: 1px solid #eee;
+}
+
+.custom-admin-table tbody tr:hover {
+    background-color: var(--putih);
+}
+
+/* Badge & Utility */
+.bg-sage {
+    background-color: var(--sage) !important;
+}
+
+.text-success {
+    color: var(--hijau-muda) !important;
+}
+
+.badge {
+    padding: 8px 12px;
+    font-weight: 600;
+}
+
+/* Tombol Kustom */
+.btn-success {
+    background-color: var(--hijau-muda) !important;
+    border: none;
+    transition: 0.3s;
+}
+
+.btn-success:hover {
+    background-color: var(--hijau-tua) !important;
+    transform: scale(1.05);
+}
+
+.btn-coklat {
+    background-color: var(--coklat) !important;
+    color: var(--putih) !important;
+    border: none;
+    transition: 0.3s;
+}
+
+.btn-coklat:hover {
+    background-color: #000 !important;
+    color: var(--cream) !important;
+    transform: scale(1.05);
+}
+
+.btn-outline-dark {
+    border-color: var(--coklat);
+    color: var(--coklat);
+}
+
+.btn-outline-dark:hover {
+    background-color: var(--coklat);
+    color: var(--putih);
+}
+
+/* Navbar */
+.navbar {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.navbar h5 {
+    color: var(--hijau-tua);
+}
+
+.logo {
+    background-color: var(--putih);
+    margin-left: auto;
+    margin-right: auto;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 3px solid rgba(242, 237, 194, 0.3);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
