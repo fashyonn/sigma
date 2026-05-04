@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laporan Kas</title>
+    <title>Program Masjid</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
@@ -31,9 +31,9 @@
                         Dashboard</a>
                     <a href="verifikasi.html" class="list-group-item list-group-item-action"><i class="bi bi-check-circle me-2"></i> 
                         Verifikasi Donasi</a>
-                    <a href="kas.html" class="list-group-item list-group-item-action active-menu"><i class="bi bi-cash me-2"></i>
+                    <a href="kas.html" class="list-group-item list-group-item-action"><i class="bi bi-cash me-2"></i>
                         Laporan Kas</a>
-                    <a href="program.html" class="list-group-item list-group-item-action"><i class="bi bi-cash me-2"></i>
+                    <a href="program.html" class="list-group-item list-group-item-action active-menu"><i class="bi bi-cash me-2"></i>
                         Program Masjid</a>
                     <a href="user.html" class="list-group-item list-group-item-action"><i class="bi bi-people me-2"></i> User
                         Manajemen</a>
@@ -45,7 +45,7 @@
 
         <div id="page-content-wrapper" class="w-100" style="background-color: var(--putih);">
             <nav class="navbar navbar-expand-lg navbar-light bg-white py-3 px-4 shadow-sm">
-                <h5 class="fw-bold m-0">Laporan Kas</h5>
+                <h5 class="fw-bold m-0">Program Masjid</h5>
                 <div class="ms-auto d-flex align-items-center">
                     <span class="me-3 small text-muted">Selamat Datang, Admin</span>
                     <i class="bi bi-person-circle fs-4"></i>
@@ -53,64 +53,55 @@
             </nav>
 
             <div class="container-fluid p-4">
-                <div class="row g-4 mb-4">
-                    <div class="col-md-4">
-                        <div class="stat-card p-4 shadow-sm rounded-4" style="background-color: var(--sage);">
-                            <small class="text-muted fw-bold">TOTAL SALDO KAS</small>
-                            <h2 class="fw-bold mt-2" style="color: var(--hijau-muda);">Rp 32.780.150</h2>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="stat-card p-4 shadow-sm rounded-4 bg-white border-5">
-                            <i class="bi bi-arrow-up-circle text-uppercase" style="color: var(--hijau-muda);"></i>
-                            <small class="text-muted fw-bold text-uppercase">Pemasukan</small>
-                            <h2 class="fw-bold mt-2" style="color: var(--hijau-muda);">Rp 14.550.000</h2>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="stat-card p-4 shadow-sm rounded-4 bg-white border-5">
-                            <i class="bi bi-arrow-down-circle text-uppercase" style="color: maroon;"></i>
-                            <small class="text-muted fw-bold text-uppercase">Pengeluaran</small>
-                            <h2 class="fw-bold mt-2" style="color: maroon;">Rp 8.920.000</h2>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="bg-white p-4 rounded-4 shadow-sm">
                     <div class="d-flex justify-content-between align-items-center mb-4">
-                        <h5 class="fw-bold">Laporan Kas</h5>
+                        <h5 class="fw-bold">Antrian Verifikasi Donasi</h5>
                     </div>
                     <div class="table-responsive">
                         <table class="table align-middle custom-admin-table">
                             <thead>
                                 <tr>
-                                    <th>Kas ID</th>
+                                    <th>Donasi ID</th>
+                                    <th>Donatur</th>
                                     <th>Tanggal</th>
                                     <th>Jenis</th>
-                                    <th>Kategori</th>
-                                    <th>Keterangan</th>
                                     <th>Jumlah</th>
-                                    <th>Donasi ID</th>
+                                    <th>Nomor Bukti</th>
+                                    <th>Status</th>
+                                    <th class="text-center pe-4">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td class="ps-4 fw-bold">KAS-001</td>
+                                    <td class="ps-4 fw-bold">DON-001</td>
+                                    <td>Ahmad Fulan</td>
                                     <td>14/07/2026</td>
                                     <td><span class="badge bg-sage text-success rounded-pill px-3">Beasiswa</span></td>
-                                    <td><span class="badge bg-light text-secondary-emphasis rounded-pill px-3">Donasi</span></td>
-                                    <td>Donasi beasiswa</td>
                                     <td class="fw-bold">Rp 500.000</td>
-                                    <td class="ps-4 fw-bold">DON-001</td>
+                                    <td><span class="text-muted">12345678</span></td>
+                                    <td><span class="badge bg-warning-subtle text-warning rounded-pill">Belum Terverifikasi</span>
+                                    </td>
+                                    <td class="text-center pe-4">
+                                        <div class="d-flex gap-2 justify-content-center">
+                                            <button class="btn btn-sm btn-success rounded-pill px-3">Verifikasi</button>
+                                        </div>
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td class="ps-4 fw-bold">KAS-002</td>
-                                    <td>14/07/2026</td>
-                                    <td><span class="badge bg-sage text-success rounded-pill px-3">Pembangunan</span></td>
-                                    <td><span class="badge bg-light text-secondary-emphasis rounded-pill px-3">Donasi</span></td>
-                                    <td>Donasi pembangunan</td>
-                                    <td class="fw-bold">Rp 1.000.000</td>
                                     <td class="ps-4 fw-bold">DON-002</td>
+                                    <td>Siti Fatimah</td>
+                                    <td>14/07/2026</td>
+                                    <td><span class="badge bg-sage text-success rounded-pill px-3">Pembangunan</span>
+                                    </td>
+                                    <td class="fw-bold">Rp 1.000.000</td>
+                                    <td><span class="text-muted">135624745</span></td>
+                                    <td><span class="badge bg-warning-subtle text-warning rounded-pill">Belum Terverifikasi</span>
+                                    </td>
+                                    <td class="text-center pe-4">
+                                        <div class="d-flex gap-2 justify-content-center">
+                                            <button class="btn btn-sm btn-success rounded-pill px-3">Verifikasi</button>
+                                        </div>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
