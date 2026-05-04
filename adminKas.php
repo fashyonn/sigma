@@ -38,7 +38,7 @@ include "koneksi.php";
 		$tahun = $_GET['tahun'] ?? date('Y');
 		$query = mysqli_query($connect, "SELECT * FROM (
 		   	SELECT 
-				kasID, tanggal, jenis, kategori, nominal, keterangan,
+				kasID, tanggal, jenis, programID, nominal, keterangan,
 		 		sum(case 
 		  			when jenis = 'Kas Masuk' then nominal 
 					when jenis = 'Kas Keluar' then -nominal 
