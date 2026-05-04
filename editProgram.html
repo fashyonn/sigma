@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Program Masjid</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="dash-body d-flex" id="wrapper">
+        <div class="sidebar" style="background-color: var(--hijau-tua); min-width: 250px; min-height: 100vh;">
+            <div class="sidebar-heading text-center py-4 text-white">
+                <div class="logo">
+                    <img src="asset/SIGMA.png" height="40" class="mb-2"><br>
+                </div>
+                <b style="color: var(--cream);">SIGMA ADMIN</b>
+            </div>
+            <div class="list-group list-group-flush px-3">
+                <nav class="list-group list-group-flush px-2">
+                    <a href="dashboard.html" class="list-group-item list-group-item-action"><i
+                            class="bi bi-speedometer2 me-2"></i>
+                        Dashboard</a>
+                    <a href="verifikasi.html" class="list-group-item list-group-item-action"><i
+                            class="bi bi-check-circle me-2"></i>
+                        Verifikasi Donasi</a>
+                    <a href="kas.html" class="list-group-item list-group-item-action"><i class="bi bi-cash me-2"></i>
+                        Laporan Kas</a>
+                    <a href="program.html" class="list-group-item list-group-item-action active-menu"><i
+                            class="bi bi-calendar-plus"></i>
+                        Program Masjid</a>
+                    <a href="user.html" class="list-group-item list-group-item-action"><i class="bi bi-people me-2"></i>
+                        User
+                        Manajemen</a>
+                    <a href="index.html" class="list-group-item list-group-item-action mt-5 text-danger"><i
+                            class="bi bi-box-arrow-right me-2"></i> Logout</a>
+                </nav>
+            </div>
+        </div>
+
+        <div id="page-content-wrapper" class="w-100" style="background-color: var(--putih);">
+            <nav class="navbar navbar-expand-lg navbar-light bg-white py-3 px-4 shadow-sm">
+                <h5 class="fw-bold m-0">Program Masjid</h5>
+                <div class="ms-auto d-flex align-items-center">
+                    <span class="me-3 small text-muted">Selamat Datang, Admin</span>
+                    <i class="bi bi-person-circle fs-4"></i>
+                </div>
+            </nav>
+
+            <div class="container p-4">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="bg-white p-5 rounded-4 shadow-sm border">
+                            <div class="mb-4 text-center">
+                                <h4 class="fw-bold text-dark">Edit Program Beasiswa Pendidikan</h4>
+                            </div>
+
+                            <hr class="mb-4 opacity-10">
+
+                            <form action="update_proses.php" method="POST">
+                                <div class="mb-3 row align-items-center">
+                                    <label for="programID" class="col-sm-3 col-form-label fw-semibold">Program ID</label>
+                                    <div class="col-sm-9 text-end">
+                                        <input type="text" readonly class="form-control-plaintext text-muted fw-bold"
+                                            id="programID" value="PRO-001" style="text-align: right;">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row align-items-center">
+                                    <label for="inputNama" class="col-sm-3 col-form-label fw-semibold">Nama</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control rounded-pill px-3" name="nama"
+                                            id="inputNama" placeholder="Beasiswa Pendidikan">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row align-items-center">
+                                    <label for="inputTarget" class="col-sm-3 col-form-label fw-semibold">Target</label>
+                                    <div class="col-sm-9">
+                                        <div class="input-group">
+                                            <input type="number" class="form-control rounded-pill px-3"
+                                                name="target" id="inputTarget" placeholder="1.000.000">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-4 row align-items-center">
+                                    <label for="validationStatus"
+                                        class="col-sm-3 col-form-label fw-semibold">Status</label>
+                                    <div class="col-sm-9">
+                                        <select class="form-select rounded-pill px-3" name="status"
+                                            id="validationStatus" required>
+                                            <option selected disabled value="">Pilih Status...</option>
+                                            <option value="Aktif">Aktif</option>
+                                            <option value="Non-Aktif">Non-Aktif</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-end gap-2 mt-4">
+                                    <a href="program.html"><button type="button" class="btn btn-light rounded-pill px-4">Batal</button></a>
+                                    <a href=""><button type="submit" class="btn btn-success rounded-pill px-4 shadow-sm">Simpan Perubahan</button></a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
