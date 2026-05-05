@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Manajemen</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="dash-body d-flex" id="wrapper">
+        <div class="sidebar" style="background-color: var(--hijau-tua); min-width: 250px; min-height: 100vh;">
+            <div class="sidebar-heading text-center py-4 text-white">
+                <div class="logo">
+                    <img src="asset/SIGMA.png" height="40" class="mb-2"><br>
+                </div>
+                <b style="color: var(--cream);">SIGMA ADMIN</b>
+            </div>
+            <div class="list-group list-group-flush px-3">
+                <nav class="list-group list-group-flush px-2">
+                    <a href="dashboard.html" class="list-group-item list-group-item-action"><i
+                            class="bi bi-speedometer2 me-2"></i>
+                        Dashboard</a>
+                    <a href="verifikasi.html" class="list-group-item list-group-item-action"><i
+                            class="bi bi-check-circle me-2"></i>
+                        Verifikasi Donasi</a>
+                    <a href="kas.html" class="list-group-item list-group-item-action"><i class="bi bi-cash me-2"></i>
+                        Laporan Kas</a>
+                    <a href="program.html" class="list-group-item list-group-item-action"><i class="bi bi-calendar-plus"></i>
+                        Program Masjid</a>
+                    <a href="user.html" class="list-group-item list-group-item-action active-menu"><i
+                            class="bi bi-people me-2"></i> User
+                        Manajemen</a>
+                    <a href="index.html" class="list-group-item list-group-item-action mt-5 text-danger"><i
+                            class="bi bi-box-arrow-right me-2"></i> Logout</a>
+                </nav>
+            </div>
+        </div>
+
+        <div id="page-content-wrapper" class="w-100" style="background-color: var(--putih);">
+            <nav class="navbar navbar-expand-lg navbar-light bg-white py-3 px-4 shadow-sm">
+                <h5 class="fw-bold m-0">User Manajemen</h5>
+                <div class="ms-auto d-flex align-items-center">
+                    <span class="me-3 small text-muted">Selamat Datang, Admin</span>
+                    <i class="bi bi-person-circle fs-4"></i>
+                </div>
+            </nav>
+
+            <div class="container-fluid p-4">
+                <div class="bg-white p-4 rounded-4 shadow-sm">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h5 class="fw-bold">Data User SIGMA</h5>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table align-middle custom-admin-table">
+                            <thead>
+                                <tr>
+                                    <th>ID User</th>
+                                    <th>Nama Pengguna</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Status</th>
+                                    <th class="text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>USR-001</td>
+                                    <td><b>Anwar Ibrahim</b></td>
+                                    <td>anwar@sigma.id</td>
+                                    <td><span class="badge bg-sage text-success">Super Admin</span></td>
+                                    <td><span class="badge bg-success-subtle text-success">Aktif</span></td>
+                                    <td class="text-center">
+                                        <button class="btn btn-sm btn-outline-dark"><i
+                                                class="bi bi-pencil"></i></button>
+                                        <button class="btn btn-sm btn-coklat"><i class="bi bi-shield-lock"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
