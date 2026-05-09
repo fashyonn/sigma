@@ -1,3 +1,30 @@
+<?php
+include "koneksi.php";
+    session_start();
+    if(!isset($_SESSION['userID'])){
+        header("Location: login.php");
+    }
+
+	$query = mysqli_query($connect, "SELECT * from user");
+	if (isset($_GET['aksi']) && $_GET['aksi'] == 'tambahAdmin') {
+	    mysqli_query($connect, "INSERT INTO user(username, password, email, role, status) VALUES ('{$_POST['username']}','{$_POST['password']}','{$_POST['email']}', '{$_POST['role']}','{$_POST['status']}')");
+	    header("Location: user.php");
+	    exit;
+	}
+	if (isset($_GET['aksi']) && $_GET['aksi'] == 'simpanAdmin') {
+	    $id = $_GET['id'];
+	    mysqli_query($connect, "UPDATE user SET username='{$_POST['username']}', password='{$_POST['password']}', email='{$_POST['email']}', role='{$_POST['role']}', status='{$_POST['status']}' where userID = '$id'");
+	    header("Location: user.php");
+	    exit;
+	}
+	if (isset($_GET['aksi']) && $_GET['aksi'] == 'hapus'){
+	    $id = $_GET['id'];
+	    mysqli_query($connect, "DELETE FROM user WHERE userID = '$id'");
+	    header("Location: user.php");
+	    exit;
+	}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -55,6 +82,103 @@
                 </div>
             </nav>
 
+    <?php if(isset($_GET['aksi'])&& $_GET['aksi'] == 'editAdmin'): 
+        $id = $_GET['id'];
+        $query = mysqli_query($connect, "SELECT * from user where userID = '$id'");
+        $data = mysqli_fetch_assoc($query); ?>
+        <form action="adminUser.php?aksi=simpanAdmin&id=<?= $data['userID']?>" method="POST">
+            <label for="id">ID : </label>
+            <i><?= $data['userID']?></i><br>
+
+            <input type="text" name="username" value="<?=$data['username']?>"><br>
+            <input type="text" name="password" value="<?=$data['password']?>"><br>
+            <input type="text" name="email" value="<?=$data['email']?>"><br>
+            <select name="role">
+                <option value="administrator" <?=($data['role'] == 'administrator')? 'selected': ''?>>Administrator</option>
+                <option value="bendahara" <?=($data['role'] == 'bendahara')? 'selected': ''?>>Bendahara</option>
+            </select><br>
+            <select name="status">
+                <option value="aktif" <?=($data['status'] == 'aktif')? 'selected': ''?>>Aktif</option>
+                <option value="nonaktif" <?=($data['status'] == 'nonaktif')? 'selected': ''?>>Nonaktif</option>
+            </select><br>
+            <button type="submit">Submit</button>
+        </form>
+
+
+            <div class="container-fluid p-4">
+                <div class="bg-white p-4 rounded-4 shadow-sm">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h5 class="fw-bold">Data User SIGMA</h5>
+                    </div>
+                </div>
+
+                            <hr class="mb-4 opacity-10">
+
+                            <form action="update_proses.php" method="POST">
+                                <div class="mb-3 row align-items-center">
+                                    <label for="programID" class="col-sm-3 col-form-label fw-semibold">Program ID</label>
+                                    <div class="col-sm-9 text-end">
+                                        <input type="text" readonly class="form-control-plaintext text-muted fw-bold"
+                                            id="programID" value="PRO-001" style="text-align: right;">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row align-items-center">
+                                    <label for="inputUsername" class="col-sm-3 col-form-label fw-semibold">Nama</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control rounded-pill px-3" name="nama"
+                                            id="inputUsername" placeholder="Beasiswa Pendidikan">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row align-items-center">
+                                    <label for="inputPassword" class="col-sm-3 col-form-label fw-semibold">Password</label>
+                                    <div class="col-sm-9">
+                                        <input type="password" class="form-control rounded-pill px-3" name="nama"
+                                            id="inputPassword" placeholder="Beasiswa Pendidikan">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row align-items-center">
+                                    <label for="inputEmail" class="col-sm-3 col-form-label fw-semibold">Email</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control rounded-pill px-3" name="nama"
+                                            id="inputEmail" placeholder="Beasiswa Pendidikan">
+                                    </div>
+                                </div>
+
+                                <div class="mb-4 row align-items-center">
+                                    <label for="role"
+                                        class="col-sm-3 col-form-label fw-semibold">Status</label>
+                                    <div class="col-sm-9">
+                                        <select class="form-select rounded-pill px-3" name="status"
+                                            id="role" required>
+                                            <option selected disabled value="">Pilih Role...</option>
+                                            <option value="administrator">Administrator</option>
+                                            <option value="bendahara">Bendahara</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="mb-4 row align-items-center">
+                                    <label for="validationStatus"
+                                        class="col-sm-3 col-form-label fw-semibold">Status</label>
+                                    <div class="col-sm-9">
+                                        <select class="form-select rounded-pill px-3" name="status"
+                                            id="validationStatus" required>
+                                            <option selected disabled value="">Pilih Status...</option>
+                                            <option value="Aktif">Aktif</option>
+                                            <option value="Non-Aktif">Non-Aktif</option>
+                                        </select>
+                                    </div>
+                                </div>
+            </div>
+
+
+
+
+    <?php else:?>
+
             <div class="container-fluid p-4">
                 <div class="bg-white p-4 rounded-4 shadow-sm">
                     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -73,23 +197,35 @@
                                 </tr>
                             </thead>
                             <tbody>
+							<?php while($data=mysqli_fetch_assoc($query)):?>
                                 <tr>
-                                    <td>USR-001</td>
-                                    <td><b>Anwar Ibrahim</b></td>
-                                    <td>anwar@sigma.id</td>
-                                    <td><span class="badge bg-sage text-success">Super Admin</span></td>
-                                    <td><span class="badge bg-success-subtle text-success">Aktif</span></td>
+                                    <td><?=$data['userID']?></td>
+                                    <td><b><?=$data['username']?></b></td>
+                                    <td><?=$data['email']?></td>
+                                    <td><span class="badge bg-sage text-success"><?=$data['role']?></span></td>
+                                    <td>
+                                        <?php if ($data['status'] == 'aktif'): ?>
+                                            <span class="badge bg-warning-subtle text-success rounded-pill">Aktif</span>
+                                        <?php else: ?>
+                                            <span class="badge bg-warning-subtle text-warning rounded-pill">Nonaktif</span>
+                                        <?php endif; ?>
+                                    </td>
                                     <td class="text-center">
-                                        <button class="btn btn-sm btn-outline-dark"><i
-                                                class="bi bi-pencil"></i></button>
-                                        <button class="btn btn-sm btn-coklat"><i class="bi bi-shield-lock"></i></button>
+                                        <a href="user.php?aksi=editAdmin&id=<?=$data['userID']?>"><button class="btn btn-sm btn-outline-dark"><i
+                                                class="bi bi-pencil"></i></button></a>
+                                        <a href="user.php?aksi=hapus&id=<?=$data['userID']?>" 
+		                       onclick="return confirm('Hapus user ini?')"><button class="btn btn-sm btn-coklat"><i class="bi bi-shield-lock"></i></button></a>
                                     </td>
                                 </tr>
+                            <?php endwhile; ?>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
+
+        <?php endif;?>
+
         </div>
     </div>
 </body>
