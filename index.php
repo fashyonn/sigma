@@ -1,0 +1,273 @@
+<?php
+include 'koneksi.php';
+	$total = mysqli_query($connect, "SELECT 
+		sum(case when jenis = 'Kas Masuk' then nominal else 0 end) AS totalMasuk,
+		sum(case when jenis = 'Kas Keluar' then nominal else 0 end) AS totalKeluar
+		FROM kas");
+	$queryKas=mysqli_query($connect,"SELECT * from kas order by tanggal desc");
+	$queryProgram= mysqli_query($connect, "SELECT * from program where status = 'aktif'");
+	$queryPilih= mysqli_query($connect, "SELECT * from program where status = 'aktif'");
+	$queryRecent= mysqli_query($connect,"SELECT * from kas where donasiID is not null order by kasID desc limit 1");
+	$data_total = mysqli_fetch_assoc($total);
+	$pemasukan  = $data_total['totalMasuk'] ?? 0;
+	$pengeluaran = $data_total['totalKeluar'] ?? 0;
+	$saldo  = $pemasukan - $pengeluaran;
+
+    if (isset($_GET['aksi']) && $_GET['aksi'] == 'tambahDonasi') {
+        mysqli_query($connect, "INSERT INTO donasi(tanggal, programID, nama, nominal, noRef) VALUES ('{$_POST['tanggal']}','{$_POST['program']}','{$_POST['nama']}', '{$_POST['nominal']}','{$_POST['noRef']}')");
+        header("Location: index.php");
+        exit;
+    }
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIGMA</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-light shadow-sm py-3">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="asset/SIGMA.png" alt="Logo" height="50" class="me-2">
+                <div>
+                    <span>SIGMA</span>
+                    <sub>Sistem Informasi Gema Muslim Amanah</sub>
+                </div>
+            </a>
+
+            <div class="ms-auto d-flex align-items-center">
+
+                <a href="login.html" class="btn btn-outline-success rounded-pill px-4 d-flex align-items-center">
+                    <i class="bi bi-person-fill me-2"></i> Admin
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-banner">
+        <h1 class="hero-title">
+            Mewujudkan Transparansi <br> dan Kemajuan Ummat
+        </h1>
+    </section>
+
+    <section class="about-section">
+        <div class="container">
+            <div class="glass-box">
+                <h2 class="fw-bold mb-4">TENTANG SIGMA</h2>
+                <p>SIGMA (Sistem Informasi Gema Muslim Amanah) adalah platform digital yang dirancang untuk memperkuat
+                    transparansi dan akuntabilitas organisasi. Kami berfokus pada digitalisasi pengelolaan dana ummat,
+                    pelaporan kegiatan secara real-time, dan mempermudah akses informasi bagi para relawan serta donatur
+                    secara amanah.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="programs-section">
+        <div class="container">
+            <h2 class="section-title">Featured Programs</h2>
+
+            <div class="row g-4 justify-content-center">
+            	<?php while ($program=mysqli_fetch_assoc($queryProgram)): 
+            		$queryTerkumpul=mysqli_query($connect,"SELECT sum(nominal) as terkumpul from kas where programID='{$program['programID']}'");
+            		$nominal=mysqli_fetch_assoc($queryTerkumpul);
+            		$persen = round(($nominal['terkumpul'] / $program['target']) * 100);
+            		?>
+                <div class="col-md-4">
+                    <div class="program-card">
+                        <img src="asset/beasiswa.jpg" alt="<?=$program['nama']?>">
+                        <div class="program-content">
+                            <h5><?=$program['nama']?></h5>
+                            <div class="progress-info">
+                                <div class="progress">
+                                    <div class="progress-bar" style="width: <?=$persen?>%"></div>
+                                </div>
+                                <p>Funding Progress <span><?=$persen?>%</span></p>
+                            </div>
+                            <a href="#donasi" class="btn-donasi">Donasi Sekarang</a>
+                        </div>
+                    </div>
+                </div>    		
+            	<?php endwhile; ?>
+            </div>
+        </div>
+    </section>
+
+    <section class="kas-section py-5">
+        <div class="container">
+            <h2 class="kas-title">Transparansi Kas Masjid</h2>
+
+            <div class="row g-3 mb-5 text-center">
+                <div class="col-md-3">
+                    <div class="summary-card shadow-sm p-3">
+                        <div class="d-flex align-items-center justify-content-center mb-2">
+                            <i class="bi bi-wallet2 fs-3 me-2"></i>
+                            <span class="text-kas-1 fw-bold">Total Saldo</span>
+                        </div>
+                        <h5 class="fw-bold"><?= "Rp " . number_format($saldo, 2, ',', '.'); ?></h5>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="summary-card shadow-sm p-3 border-4">
+                        <div class="d-flex align-items-center justify-content-center mb-2">
+                            <i class="bi bi-arrow-up-circle fs-3 me-2 arrow-up"></i>
+                            <span class="text-kas-2 fw-bold">Pemasukan</span>
+                        </div>
+                        <h5 class="fw-bold"><?= "Rp " . number_format($pemasukan, 2, ',', '.'); ?></h5>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="summary-card shadow-sm p-3 border-4">
+                        <div class="d-flex align-items-center justify-content-center mb-2">
+                            <i class="bi bi-arrow-down-circle fs-3 me-2 arrow-down"></i>
+                            <span class="text-kas-3 fw-bold">Pengeluaran</span>
+                        </div>
+                        <h5 class="fw-bold"><?= "Rp " . number_format($pengeluaran, 2, ',', '.'); ?></h5>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="summary-card-donasi shadow-sm p-3 text-white">
+                        <span class="text-kas-4 fw-bold d-block mb-1">Donasi Terbaru</span>
+                        <?php while($donasiTerbaru=mysqli_fetch_assoc($queryRecent)):
+                        	$programTerbaru= mysqli_query($connect, "SELECT * from program where programID = '{$donasiTerbaru['programID']}'");?>
+                        <h5 class="fw-bold mb-0"><?= "Rp " . number_format($donasiTerbaru['nominal'], 2, ',', '.'); ?></h5>
+                        	<?php while($programRecent=mysqli_fetch_assoc($programTerbaru)):?>
+                        <small class="opacity-75">- <?=$programRecent['nama']?></small>
+                        	<?php endwhile; ?>
+                    <?php endwhile; ?>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-4">
+
+                    <div class="table-container p-4 shadow-sm bg-white rounded-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="fw-bold mb-0 text-pemasukan">Tabel Kas</h5>
+                            <div class="btn-group btn-group-sm">
+                                <button class="btn btn-outline-pemasukan active">Hari Ini</button>
+                                <button class="btn btn-outline-pemasukan">Bulan Ini</button>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle custom-table">
+                                <thead>
+                                    <tr>
+                                        <th>Tanggal</th>
+                                        <th>Jenis</th>
+                                        <th>Kategori</th>
+                                        <th>Keterangan</th>
+                                        <th>Nominal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+								<?php while ($kas=mysqli_fetch_array($queryKas)) :
+									$queryProgramKas= mysqli_query($connect, "SELECT * from program WHERE programID = '{$kas['programID']}'");
+									$programKas = mysqli_fetch_assoc($queryProgramKas); ?>
+                                    <tr>
+                                        <td><?=$kas['tanggal']?></td>
+                                        <td><?=$kas['jenis']?></td>
+                                        <td><?= $programKas['nama']?></td>
+                                        <td><?=$kas['keterangan']?></td>
+                                        <td class="text-pemasukan fw-bold"><?= "Rp " . number_format($kas['nominal'], 2, ',', '.'); ?></td>
+                                    </tr>
+                                <?php endwhile;?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+            </div>
+        </div>
+    </section>
+
+    <section class="donation-area" id="donasi">
+        <div class="container">
+            <div class="row g-5">
+
+                <div class="col-lg-5">
+                    <div class="payment-card shadow-sm">
+                        <h4 class="fw-bold mb-4 text-center">Metode Donasi</h4>
+                        <div class="qr-wrapper text-center mb-4">
+                            <img src="asset/qr-code.png" alt="QRIS SIGMA" class="img-fluid rounded shadow-sm"
+                                style="max-width: 200px; border: 8px solid white;">
+                            <p class="mt-3 text-muted small">Scan QRIS a.n Gema Muslim Amanah</p>
+                        </div>
+
+                        <div class="bank-list">
+                            <div
+                                class="bank-item p-3 mb-2 bg-white rounded d-flex justify-content-between align-items-center shadow-sm">
+                                <span class="fw-bold text-secondary">BSI</span>
+                                <span class="text-success fw-bold">7123456789</span>
+                            </div>
+                            <div
+                                class="bank-item p-3 bg-white rounded d-flex justify-content-between align-items-center shadow-sm">
+                                <span class="fw-bold text-secondary">Muamalat</span>
+                                <span class="text-success fw-bold">1230009876</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-7">
+                    <div class="form-card p-4 p-md-5 shadow-sm bg-white border-0" style="border-radius: 25px;">
+                        <h4 class="fw-bold mb-4">Konfirmasi Donasi</h4>
+                        <form action="index.php?aksi=tambahDonasi" method="POST" id="formDonasi">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label small fw-bold">Nama Lengkap</label>
+                                    <input type="text" name="nama" class="form-control" placeholder="Nama donatur" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label small fw-bold">Tanggal Transfer</label>
+                                    <input type="date"  name="tanggal" class="form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label small fw-bold">Jenis Program</label>
+                                <select class="form-select" id="selectProgram" required>
+                                    <option value="" disabled selected>Pilih Program...</option>
+						        <?php while($program=mysqli_fetch_assoc($queryPilih)):?>
+						            <option value="<?=$program['programID']?>"> <?=$program['nama']?> </option>
+						        <?php endwhile; ?>
+                                </select>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label small fw-bold">Nominal (Rp)</label>
+                                    <input type="number" name="nominal" class="form-control" placeholder="Contoh: 100000" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label small fw-bold">No. Bukti Transfer</label>
+                                    <input type="text" name="noRef" class="form-control" placeholder="Nomor referensi/ID" required>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-success w-100 py-3 mt-3 rounded-pill fw-bold">Kirim
+                                Konfirmasi</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

@@ -4,25 +4,27 @@ include "koneksi.php";
     if(!isset($_SESSION['userID'])){
         header("Location: login.php");
     }
+    $queryUser = mysqli_query($connect, "SELECT username from user where userID = '{$_SESSION['userID']}'" );
+    $user = mysqli_fetch_assoc($queryUser); $username = $user['username'];
 
-	$query = mysqli_query($connect, "SELECT * from user");
-	if (isset($_GET['aksi']) && $_GET['aksi'] == 'tambahAdmin') {
-	    mysqli_query($connect, "INSERT INTO user(username, password, email, role, status) VALUES ('{$_POST['username']}','{$_POST['password']}','{$_POST['email']}', '{$_POST['role']}','{$_POST['status']}')");
-	    header("Location: user.php");
-	    exit;
-	}
-	if (isset($_GET['aksi']) && $_GET['aksi'] == 'simpanAdmin') {
-	    $id = $_GET['id'];
-	    mysqli_query($connect, "UPDATE user SET username='{$_POST['username']}', password='{$_POST['password']}', email='{$_POST['email']}', role='{$_POST['role']}', status='{$_POST['status']}' where userID = '$id'");
-	    header("Location: user.php");
-	    exit;
-	}
-	if (isset($_GET['aksi']) && $_GET['aksi'] == 'hapus'){
-	    $id = $_GET['id'];
-	    mysqli_query($connect, "DELETE FROM user WHERE userID = '$id'");
-	    header("Location: user.php");
-	    exit;
-	}
+    $query = mysqli_query($connect, "SELECT * from user");
+    if (isset($_GET['aksi']) && $_GET['aksi'] == 'tambahUser') {
+        mysqli_query($connect, "INSERT INTO user(username, password, email, role, status) VALUES ('{$_POST['username']}','{$_POST['password']}','{$_POST['email']}', '{$_POST['role']}','{$_POST['status']}')");
+        header("Location: user.php");
+        exit;
+    }
+    if (isset($_GET['aksi']) && $_GET['aksi'] == 'simpanUser') {
+        $id = $_GET['id'];
+        mysqli_query($connect, "UPDATE user SET username='{$_POST['username']}', password='{$_POST['password']}', email='{$_POST['email']}', role='{$_POST['role']}', status='{$_POST['status']}' where userID = '$id'");
+        header("Location: user.php");
+        exit;
+    }
+    if (isset($_GET['aksi']) && $_GET['aksi'] == 'hapus'){
+        $id = $_GET['id'];
+        mysqli_query($connect, "DELETE FROM user WHERE userID = '$id'");
+        header("Location: user.php");
+        exit;
+    }
 ?>
 
 <!DOCTYPE html>
@@ -54,20 +56,20 @@ include "koneksi.php";
             </div>
             <div class="list-group list-group-flush px-3">
                 <nav class="list-group list-group-flush px-2">
-                    <a href="dashboard.html" class="list-group-item list-group-item-action"><i
+                    <a href="dashboard.php" class="list-group-item list-group-item-action"><i
                             class="bi bi-speedometer2 me-2"></i>
                         Dashboard</a>
-                    <a href="verifikasi.html" class="list-group-item list-group-item-action"><i
+                    <a href="verifikasi.php" class="list-group-item list-group-item-action"><i
                             class="bi bi-check-circle me-2"></i>
                         Verifikasi Donasi</a>
-                    <a href="kas.html" class="list-group-item list-group-item-action"><i class="bi bi-cash me-2"></i>
+                    <a href="kas.php" class="list-group-item list-group-item-action"><i class="bi bi-cash me-2"></i>
                         Laporan Kas</a>
-                    <a href="program.html" class="list-group-item list-group-item-action"><i class="bi bi-calendar-plus"></i>
+                    <a href="program.php" class="list-group-item list-group-item-action"><i class="bi bi-calendar-plus"></i>
                         Program Masjid</a>
-                    <a href="user.html" class="list-group-item list-group-item-action active-menu"><i
+                    <a href="user.php" class="list-group-item list-group-item-action active-menu"><i
                             class="bi bi-people me-2"></i> User
                         Manajemen</a>
-                    <a href="index.html" class="list-group-item list-group-item-action mt-5 text-danger"><i
+                    <a href="logout.php" class="list-group-item list-group-item-action mt-5 text-danger"><i
                             class="bi bi-box-arrow-right me-2"></i> Logout</a>
                 </nav>
             </div>
@@ -77,73 +79,54 @@ include "koneksi.php";
             <nav class="navbar navbar-expand-lg navbar-light bg-white py-3 px-4 shadow-sm">
                 <h5 class="fw-bold m-0">User Manajemen</h5>
                 <div class="ms-auto d-flex align-items-center">
-                    <span class="me-3 small text-muted">Selamat Datang, Admin</span>
+                    <span class="me-3 small text-muted">Selamat datang <?=$username?> !</span>
                     <i class="bi bi-person-circle fs-4"></i>
                 </div>
             </nav>
 
-    <?php if(isset($_GET['aksi'])&& $_GET['aksi'] == 'editAdmin'): 
+    <?php if(isset($_GET['aksi'])&& $_GET['aksi'] == 'editUser'): 
         $id = $_GET['id'];
         $query = mysqli_query($connect, "SELECT * from user where userID = '$id'");
         $data = mysqli_fetch_assoc($query); ?>
-        <form action="adminUser.php?aksi=simpanAdmin&id=<?= $data['userID']?>" method="POST">
-            <label for="id">ID : </label>
-            <i><?= $data['userID']?></i><br>
-
-            <input type="text" name="username" value="<?=$data['username']?>"><br>
-            <input type="text" name="password" value="<?=$data['password']?>"><br>
-            <input type="text" name="email" value="<?=$data['email']?>"><br>
-            <select name="role">
-                <option value="administrator" <?=($data['role'] == 'administrator')? 'selected': ''?>>Administrator</option>
-                <option value="bendahara" <?=($data['role'] == 'bendahara')? 'selected': ''?>>Bendahara</option>
-            </select><br>
-            <select name="status">
-                <option value="aktif" <?=($data['status'] == 'aktif')? 'selected': ''?>>Aktif</option>
-                <option value="nonaktif" <?=($data['status'] == 'nonaktif')? 'selected': ''?>>Nonaktif</option>
-            </select><br>
-            <button type="submit">Submit</button>
-        </form>
-
 
             <div class="container-fluid p-4">
                 <div class="bg-white p-4 rounded-4 shadow-sm">
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <h5 class="fw-bold">Data User SIGMA</h5>
                     </div>
-                </div>
+                
 
                             <hr class="mb-4 opacity-10">
 
-                            <form action="update_proses.php" method="POST">
+                            <form action="user.php?aksi=simpanUser&id=<?=$data['userID']?>" method="POST">
                                 <div class="mb-3 row align-items-center">
-                                    <label for="programID" class="col-sm-3 col-form-label fw-semibold">Program ID</label>
+                                    <label for="programID" class="col-sm-3 col-form-label fw-semibold">User ID</label>
                                     <div class="col-sm-9 text-end">
                                         <input type="text" readonly class="form-control-plaintext text-muted fw-bold"
-                                            id="programID" value="PRO-001" style="text-align: right;">
+                                            id="programID" value="<?= $data['userID']?>" style="text-align: right;">
                                     </div>
                                 </div>
 
                                 <div class="mb-3 row align-items-center">
                                     <label for="inputUsername" class="col-sm-3 col-form-label fw-semibold">Nama</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control rounded-pill px-3" name="nama"
-                                            id="inputUsername" placeholder="Beasiswa Pendidikan">
+                                        <input type="text" class="form-control rounded-pill px-3" name="username"
+                                            id="inputUsername" value="<?=$data['username']?>">
                                     </div>
                                 </div>
 
                                 <div class="mb-3 row align-items-center">
                                     <label for="inputPassword" class="col-sm-3 col-form-label fw-semibold">Password</label>
                                     <div class="col-sm-9">
-                                        <input type="password" class="form-control rounded-pill px-3" name="nama"
-                                            id="inputPassword" placeholder="Beasiswa Pendidikan">
+                                        <input type="password" class="form-control rounded-pill px-3" name="password" id="inputPassword" value="<?=$data['password']?>">
                                     </div>
                                 </div>
 
                                 <div class="mb-3 row align-items-center">
                                     <label for="inputEmail" class="col-sm-3 col-form-label fw-semibold">Email</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control rounded-pill px-3" name="nama"
-                                            id="inputEmail" placeholder="Beasiswa Pendidikan">
+                                        <input type="text" class="form-control rounded-pill px-3" name="email"
+                                            id="inputEmail" value="<?=$data['email']?>">
                                     </div>
                                 </div>
 
@@ -151,7 +134,81 @@ include "koneksi.php";
                                     <label for="role"
                                         class="col-sm-3 col-form-label fw-semibold">Status</label>
                                     <div class="col-sm-9">
+                                        <select class="form-select rounded-pill px-3" name="role"
+                                            id="role" required>
+                                            <option selected disabled value="">Pilih Role...</option>
+                                            <option value="administrator" <?=($data['role'] == 'administrator')? 'selected': ''?>>Administrator</option>
+                                            <option value="bendahara" <?=($data['role'] == 'bendahara')? 'selected': ''?>>Bendahara</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="mb-4 row align-items-center">
+                                    <label for="validationStatus"
+                                        class="col-sm-3 col-form-label fw-semibold">Status</label>
+                                    <div class="col-sm-9">
                                         <select class="form-select rounded-pill px-3" name="status"
+                                            id="validationStatus" required>
+                                            <option selected disabled value="">Pilih Status...</option>
+                                            <option value="aktif" <?=($data['status'] == 'aktif')? 'selected': ''?>>Aktif</option>
+                                            <option value="nonaktif" <?=($data['status'] == 'nonaktif')? 'selected': ''?>>Nonaktif</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-end gap-2 mt-4">
+                                    <a href="user.php"><button type="button"
+                                            class="btn btn-light rounded-pill px-4">Batal</button></a>
+                                    <button type="submit"
+                                            class="btn btn-success rounded-pill px-4 shadow-sm">Simpan
+                                            Perubahan</button>
+                                </div>
+
+                            </form>
+                    </div>
+            </div>
+
+
+    <?php elseif(isset($_GET['aksi'])&& $_GET['aksi'] == 'inputUser'): ?>
+            <div class="container-fluid p-4">
+                <div class="bg-white p-4 rounded-4 shadow-sm">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h5 class="fw-bold">Data User SIGMA</h5>
+                    </div>
+                
+
+                            <hr class="mb-4 opacity-10">
+
+                            <form action="user.php?aksi=tambahUser" method="POST">
+
+                                <div class="mb-3 row align-items-center">
+                                    <label for="inputUsername" class="col-sm-3 col-form-label fw-semibold">Nama</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control rounded-pill px-3" name="username"
+                                            id="inputUsername" placeholder="Masukkan username">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row align-items-center">
+                                    <label for="inputPassword" class="col-sm-3 col-form-label fw-semibold">Password</label>
+                                    <div class="col-sm-9">
+                                        <input type="password" class="form-control rounded-pill px-3" name="password" id="inputPassword" placeholder="Masukkan password">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row align-items-center">
+                                    <label for="inputEmail" class="col-sm-3 col-form-label fw-semibold">Email</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control rounded-pill px-3" name="email"
+                                            id="inputEmail" placeholder="Masukkan email">
+                                    </div>
+                                </div>
+
+                                <div class="mb-4 row align-items-center">
+                                    <label for="role"
+                                        class="col-sm-3 col-form-label fw-semibold">Status</label>
+                                    <div class="col-sm-9">
+                                        <select class="form-select rounded-pill px-3" name="role"
                                             id="role" required>
                                             <option selected disabled value="">Pilih Role...</option>
                                             <option value="administrator">Administrator</option>
@@ -167,22 +224,31 @@ include "koneksi.php";
                                         <select class="form-select rounded-pill px-3" name="status"
                                             id="validationStatus" required>
                                             <option selected disabled value="">Pilih Status...</option>
-                                            <option value="Aktif">Aktif</option>
-                                            <option value="Non-Aktif">Non-Aktif</option>
+                                            <option value="aktif">Aktif</option>
+                                            <option value="nonaktif">Nonaktif</option>
                                         </select>
                                     </div>
                                 </div>
+
+                                <div class="d-flex justify-content-end gap-2 mt-4">
+                                    <a href="user.php"><button type="button"
+                                            class="btn btn-light rounded-pill px-4">Batal</button></a>
+                                    <button type="submit"
+                                            class="btn btn-success rounded-pill px-4 shadow-sm">Tambahkan User</button>
+                                </div>
+
+                            </form>
+                    </div>
             </div>
 
 
 
-
     <?php else:?>
-
             <div class="container-fluid p-4">
                 <div class="bg-white p-4 rounded-4 shadow-sm">
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <h5 class="fw-bold">Data User SIGMA</h5>
+                        <a href="user.php?aksi=inputUser"><button class="btn btn-sm btn-outline-dark"><i class="bi bi-plus">Tambah User</i></button></a>
                     </div>
                     <div class="table-responsive">
                         <table class="table align-middle custom-admin-table">
@@ -197,7 +263,7 @@ include "koneksi.php";
                                 </tr>
                             </thead>
                             <tbody>
-							<?php while($data=mysqli_fetch_assoc($query)):?>
+                            <?php while($data=mysqli_fetch_assoc($query)):?>
                                 <tr>
                                     <td><?=$data['userID']?></td>
                                     <td><b><?=$data['username']?></b></td>
@@ -211,10 +277,10 @@ include "koneksi.php";
                                         <?php endif; ?>
                                     </td>
                                     <td class="text-center">
-                                        <a href="user.php?aksi=editAdmin&id=<?=$data['userID']?>"><button class="btn btn-sm btn-outline-dark"><i
+                                        <a href="user.php?aksi=editUser&id=<?=$data['userID']?>"><button class="btn btn-sm btn-outline-dark"><i
                                                 class="bi bi-pencil"></i></button></a>
                                         <a href="user.php?aksi=hapus&id=<?=$data['userID']?>" 
-		                       onclick="return confirm('Hapus user ini?')"><button class="btn btn-sm btn-coklat"><i class="bi bi-shield-lock"></i></button></a>
+                               onclick="return confirm('Hapus user ini?')"><button class="btn btn-sm btn-coklat"><i class="bi bi-shield-lock"></i></button></a>
                                     </td>
                                 </tr>
                             <?php endwhile; ?>

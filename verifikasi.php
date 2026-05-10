@@ -68,9 +68,9 @@ include "koneksi.php";
 
         <div id="page-content-wrapper" class="w-100" style="background-color: var(--putih);">
             <nav class="navbar navbar-expand-lg navbar-light bg-white py-3 px-4 shadow-sm">
-                <h5 class="fw-bold m-0">Varifikasi Donasi</h5>
+                <h5 class="fw-bold m-0">Verifikasi Donasi</h5>
                 <div class="ms-auto d-flex align-items-center">
-                    <span class="me-3 small text-muted">Selamat Datang, <?=$username?></span>
+                    <span class="me-3 small text-muted">Selamat datang <?=$username?> !</span>
                     <i class="bi bi-person-circle fs-4"></i>
                 </div>
             </nav>

@@ -7,24 +7,24 @@ include "koneksi.php";
         $queryUser = mysqli_query($connect, "SELECT username from user where userID = '{$_SESSION['userID']}'" );
     $user = mysqli_fetch_assoc($queryUser); $username = $user['username'];
 
-	$query = mysqli_query($connect, "SELECT * from program");
-	if (isset($_GET['aksi']) && $_GET['aksi'] == 'simpanProgram') {
-	    $id = $_GET['id'];
-	    mysqli_query($connect, "UPDATE program SET nama='{$_POST['nama']}', gambar='{$_POST['gambar']}', target='{$_POST['target']}', status='{$_POST['status']}' where programID = '$id'");
-	    header("Location: program.php");
-	    exit;
-	}
-	if (isset($_GET['aksi']) && $_GET['aksi'] == 'tambahProgram') {
-	    mysqli_query($connect, "INSERT INTO program(nama, gambar, target, status) VALUES ('{$_POST['nama']}','{$_POST['gambar']}','{$_POST['target']}','{$_POST['status']}')");
-	    header("Location: program.php");
-	    exit;
-	}
-	if (isset($_GET['aksi']) && $_GET['aksi'] == 'hapus'){
-	    $id = $_GET['id'];
-	    mysqli_query($connect, "DELETE FROM program WHERE programID = '$id'");
-	    header("Location: program.php");
-	    exit;
-	}
+    $query = mysqli_query($connect, "SELECT * from program");
+    if (isset($_GET['aksi']) && $_GET['aksi'] == 'simpanProgram') {
+        $id = $_GET['id'];
+        mysqli_query($connect, "UPDATE program SET nama='{$_POST['nama']}', gambar='{$_POST['gambar']}', target='{$_POST['target']}', status='{$_POST['status']}' where programID = '$id'");
+        header("Location: program.php");
+        exit;
+    }
+    if (isset($_GET['aksi']) && $_GET['aksi'] == 'tambahProgram') {
+        mysqli_query($connect, "INSERT INTO program(nama, gambar, target, status) VALUES ('{$_POST['nama']}','{$_POST['gambar']}','{$_POST['target']}','{$_POST['status']}')");
+        header("Location: program.php");
+        exit;
+    }
+    if (isset($_GET['aksi']) && $_GET['aksi'] == 'hapus'){
+        $id = $_GET['id'];
+        mysqli_query($connect, "DELETE FROM program WHERE programID = '$id'");
+        header("Location: program.php");
+        exit;
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -75,15 +75,15 @@ include "koneksi.php";
             <nav class="navbar navbar-expand-lg navbar-light bg-white py-3 px-4 shadow-sm">
                 <h5 class="fw-bold m-0">Program Masjid</h5>
                 <div class="ms-auto d-flex align-items-center">
-                    <span class="me-3 small text-muted">Selamat datang!, <?=$username?></span>
+                    <span class="me-3 small text-muted">Selamat datang <?=$username?> !</span>
                     <i class="bi bi-person-circle fs-4"></i>
                 </div>
             </nav>
 
     <?php if(isset($_GET['aksi'])&& $_GET['aksi'] == 'editProgram'): 
-		$id = $_GET['id'];
-		$queryProgram = mysqli_query($connect, "SELECT * from program where programID = '$id'");
-		$program = mysqli_fetch_assoc($queryProgram); ?>
+        $id = $_GET['id'];
+        $queryProgram = mysqli_query($connect, "SELECT * from program where programID = '$id'");
+        $program = mysqli_fetch_assoc($queryProgram); ?>
 
             <div class="container p-4">
                 <div class="row justify-content-center">
@@ -137,8 +137,8 @@ include "koneksi.php";
                                         <select class="form-select rounded-pill px-3" name="status"
                                             id="validationStatus" required>
                                             <option disabled selected>Pilih Status...</option>
-							 	    		<option value="aktif" <?=($program['status'] == 'aktif')? 'selected': ''?>>Aktif</option>
-								    		<option value="nonaktif" <?=($program['status'] == 'nonaktif')? 'selected': ''?>>Nonaktif</option>
+                                            <option value="aktif" <?=($program['status'] == 'aktif')? 'selected': ''?>>Aktif</option>
+                                            <option value="nonaktif" <?=($program['status'] == 'nonaktif')? 'selected': ''?>>Nonaktif</option>
                                         </select>
                                     </div>
                                 </div>
@@ -236,7 +236,7 @@ include "koneksi.php";
                                 </tr>
                             </thead>
                             <tbody>
-							<?php while ($data=mysqli_fetch_assoc($query)): ?>                            	
+                            <?php while ($data=mysqli_fetch_assoc($query)): ?>                              
                                 <tr>
                                     <td class="ps-4 fw-bold"><?=$data['programID']?></td>
                                     <td><?=$data['nama']?></td>
@@ -249,7 +249,7 @@ include "koneksi.php";
                                         <?php endif; ?>
                                     </td>
                                     <td class="text-center">
-                                    	<a href="program.php?aksi=editProgram&id=<?= $data['programID']; ?>"><button class="btn btn-sm btn-outline-dark"><i
+                                        <a href="program.php?aksi=editProgram&id=<?= $data['programID']; ?>"><button class="btn btn-sm btn-outline-dark"><i
                                                 class="bi bi-pencil"></i></button></a>
                                         <a href="program.php?aksi=hapus&id=<?= $data['programID']; ?>"><button class="btn btn-sm btn-coklat"><i class="bi bi-trash"></i></button></a>
                                     </td>

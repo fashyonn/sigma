@@ -7,20 +7,20 @@ include "koneksi.php";
     $queryUser = mysqli_query($connect, "SELECT username from user where userID = '{$_SESSION['userID']}'" );
     $user = mysqli_fetch_assoc($queryUser); $username = $user['username'];
 
-	$total = mysqli_query($connect, "SELECT 
-		sum(case when jenis = 'Kas Masuk' then nominal else 0 end) AS totalMasuk,
-		sum(case when jenis = 'Kas Keluar' then nominal else 0 end) AS totalKeluar
-		FROM kas");
-	$queryProgram= mysqli_query($connect, "SELECT * from program where status = 'aktif'");
-	$data_total = mysqli_fetch_assoc($total);
-	$pemasukan  = $data_total['totalMasuk'] ?? 0;
-	$pengeluaran = $data_total['totalKeluar'] ?? 0;
-	$saldo  = $pemasukan - $pengeluaran;
+    $total = mysqli_query($connect, "SELECT 
+        sum(case when jenis = 'Kas Masuk' then nominal else 0 end) AS totalMasuk,
+        sum(case when jenis = 'Kas Keluar' then nominal else 0 end) AS totalKeluar
+        FROM kas");
+    $queryProgram= mysqli_query($connect, "SELECT * from program where status = 'aktif'");
+    $data_total = mysqli_fetch_assoc($total);
+    $pemasukan  = $data_total['totalMasuk'] ?? 0;
+    $pengeluaran = $data_total['totalKeluar'] ?? 0;
+    $saldo  = $pemasukan - $pengeluaran;
     
-	$queryDonasi = mysqli_query($connect, "SELECT count(*) as d from donasi where status='Belum Terverifikasi'");
-	$queryProgram = mysqli_query($connect, "SELECT count(*) as p from program where status = 'aktif'");
-	$perluVerif= mysqli_fetch_assoc($queryDonasi);
-	$programAktif= mysqli_fetch_assoc($queryProgram);
+    $queryDonasi = mysqli_query($connect, "SELECT count(*) as d from donasi where status='Belum Terverifikasi'");
+    $queryProgram = mysqli_query($connect, "SELECT count(*) as p from program where status = 'aktif'");
+    $perluVerif= mysqli_fetch_assoc($queryDonasi);
+    $programAktif= mysqli_fetch_assoc($queryProgram);
 
 ?>
 
@@ -60,7 +60,7 @@ include "koneksi.php";
                     <a href="kas.php" class="list-group-item list-group-item-action"><i class="bi bi-cash me-2"></i>
                         Laporan Kas</a>
                     <a href="program.php" class="list-group-item list-group-item-action"><i class="bi bi-calendar-plus"></i>
-                        Program Masjid</a>
+                         Program Masjid</a>
                     <a href="user.php" class="list-group-item list-group-item-action"><i class="bi bi-people me-2"></i> User
                         Manajemen</a>
                     <a href="logout.php" class="list-group-item list-group-item-action mt-5 text-danger"><i
@@ -73,7 +73,7 @@ include "koneksi.php";
             <nav class="navbar navbar-expand-lg navbar-light bg-white py-3 px-4 shadow-sm">
                 <h5 class="fw-bold m-0">Ringkasan Statistik</h5>
                 <div class="ms-auto d-flex align-items-center">
-                    <span class="me-3 small text-muted">Selamat datang!, <?=$username?></span>
+                    <span class="me-3 small text-muted">Selamat datang <?=$username?> !</span>
                     <i class="bi bi-person-circle fs-4"></i>
                 </div>
             </nav>
@@ -83,7 +83,9 @@ include "koneksi.php";
                     <div class="col-md-4">
                         <div class="stat-card p-4 shadow-sm rounded-4" style="background-color: var(--sage);">
                             <small class="text-muted fw-bold">TOTAL SALDO KAS</small>
-                            <h2 class="fw-bold mt-2" style="color: var(--hijau-muda);">Rp <?=$saldo ?> </h2>
+                            <h2 class="fw-bold mt-2" style="color: var(--hijau-muda);">
+                                <?= "Rp " . number_format($saldo, 2, ',', '.'); ?>
+                            </h2>
                         </div>
                     </div>
                     <div class="col-md-4">
