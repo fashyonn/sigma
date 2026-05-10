@@ -1,13 +1,35 @@
 <?php
 include 'koneksi.php';
+    if(isset($_GET['tanggalMulai']) && isset($_GET['tanggalSelesai'])){
+        $queryRange = mysqli_query($connect, "SELECT * FROM(
+            SELECT *,
+              SUM(CASE 
+                  when jenis = 'Kas Masuk' then nominal 
+                  when jenis = 'Kas Keluar' then -nominal 
+                  ELSE 0 
+              END) OVER (ORDER BY tanggal ASC, kasID ASC) AS saldo
+            FROM kas
+            ) AS t 
+            WHERE tanggal BETWEEN '{$_GET['tanggalMulai']}' AND '{$_GET['tanggalSelesai']}'
+            ORDER BY tanggal ASC");
+    }
+    else{
+        $queryRange = mysqli_query($connect, "SELECT *, sum(case 
+                    when jenis = 'Kas Masuk' then nominal 
+                    when jenis = 'Kas Keluar' then -nominal 
+                    else 0 
+                end) over (order by tanggal asc, kasID asc) AS saldo
+            from kas");
+    }
+
 $total = mysqli_query($connect, "SELECT 
 		sum(case when jenis = 'Kas Masuk' then nominal else 0 end) AS totalMasuk,
 		sum(case when jenis = 'Kas Keluar' then nominal else 0 end) AS totalKeluar
 		FROM kas");
-$queryKas = mysqli_query($connect, "SELECT * from kas order by tanggal desc");
+// $queryKas = mysqli_query($connect, "SELECT * from kas order by tanggal desc");
 $queryProgram = mysqli_query($connect, "SELECT * from program where status = 'aktif'");
 $queryPilih = mysqli_query($connect, "SELECT * from program where status = 'aktif'");
-$queryRecent = mysqli_query($connect, "SELECT * from kas where donasiID is not null order by kasID desc limit 1");
+$queryRecent = mysqli_query($connect, "SELECT * from donasi where status = 'Terverifikasi' order by donasiID desc limit 1");
 $data_total = mysqli_fetch_assoc($total);
 $pemasukan = $data_total['totalMasuk'] ?? 0;
 $pengeluaran = $data_total['totalKeluar'] ?? 0;
@@ -106,7 +128,7 @@ if (isset($_GET['aksi']) && $_GET['aksi'] == 'tambahDonasi') {
         </div>
     </section>
 
-    <section class="kas-section py-5">
+    <section class="kas-section py-5" id="kas">
         <div class="container">
             <h2 class="kas-title">Transparansi Kas Masjid</h2>
 
@@ -156,6 +178,7 @@ if (isset($_GET['aksi']) && $_GET['aksi'] == 'tambahDonasi') {
             <div class="row g-4">
 
                 <div class="table-container p-4 shadow-sm bg-white rounded-4">
+                    <form action="" method="GET">
                     <div class="row align-items-center mb-3">
 
                         <div class="col-md-3">
@@ -164,21 +187,22 @@ if (isset($_GET['aksi']) && $_GET['aksi'] == 'tambahDonasi') {
 
                         <div class="col-md-9">
                             <div class="d-flex align-items-center justify-content-end flex-wrap gap-2 mt-2">
-
                                 <h5 class="fw-bold me-1" style="color: var(--hijau-muda); white-space: nowrap;">Data
                                     Tanggal:</h5>
 
                                 <input type="date" class="form-control input-tanggal"
-                                    style="height: 40px; width: 160px; border-radius: 10px !important;">
+                                    style="height: 40px; width: 160px; border-radius: 10px !important;" name="tanggalMulai" value="<?= $_GET['tanggalMulai'] ?? '' ?>" required>
 
                                 <h5 class="fw-bold" style="color: var(--hijau-muda);">-</h5>
 
                                 <input type="date" class="form-control input-tanggal"
-                                    style="height: 40px; width: 160px; border-radius: 10px !important;">
+                                    style="height: 40px; width: 160px; border-radius: 10px !important;" name="tanggalSelesai" value="<?= $_GET['tanggalSelesai'] ?? '' ?>" required>
 
                                 <button type="submit" class="btn btn-primary d-flex align-items-center px-3"
                                     style="height: 40px; border-radius: 8px;">
+
                                     <i class="bi bi-search me-2"></i> Cari Data
+
                                 </button>
 
                                 <button type="reset" class="btn btn-outline-danger d-flex align-items-center px-3"
@@ -189,6 +213,7 @@ if (isset($_GET['aksi']) && $_GET['aksi'] == 'tambahDonasi') {
                             </div>
                         </div>
                     </div>
+                    </form>
 
                     <div class="table-responsive">
                         <table class="table table-hover align-middle custom-table">
@@ -199,10 +224,11 @@ if (isset($_GET['aksi']) && $_GET['aksi'] == 'tambahDonasi') {
                                     <th>Kategori</th>
                                     <th>Keterangan</th>
                                     <th>Nominal</th>
+                                    <th>Saldo</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php while ($kas = mysqli_fetch_array($queryKas)):
+                                <?php while ($kas = mysqli_fetch_array($queryRange)):
                                     $queryProgramKas = mysqli_query($connect, "SELECT * from program WHERE programID = '{$kas['programID']}'");
                                     $programKas = mysqli_fetch_assoc($queryProgramKas); ?>
                                     <tr>
@@ -212,6 +238,9 @@ if (isset($_GET['aksi']) && $_GET['aksi'] == 'tambahDonasi') {
                                         <td><?= $kas['keterangan'] ?></td>
                                         <td class="text-pemasukan fw-bold">
                                             <?= "Rp " . number_format($kas['nominal'], 2, ',', '.'); ?>
+                                        </td>
+                                        <td class="text-pemasukan fw-bold">
+                                            <?= "Rp " . number_format($kas['saldo'], 2, ',', '.'); ?>
                                         </td>
                                     </tr>
                                 <?php endwhile; ?>
