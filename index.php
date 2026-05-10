@@ -1,23 +1,23 @@
 <?php
 include 'koneksi.php';
-	$total = mysqli_query($connect, "SELECT 
+$total = mysqli_query($connect, "SELECT 
 		sum(case when jenis = 'Kas Masuk' then nominal else 0 end) AS totalMasuk,
 		sum(case when jenis = 'Kas Keluar' then nominal else 0 end) AS totalKeluar
 		FROM kas");
-	$queryKas=mysqli_query($connect,"SELECT * from kas order by tanggal desc");
-	$queryProgram= mysqli_query($connect, "SELECT * from program where status = 'aktif'");
-	$queryPilih= mysqli_query($connect, "SELECT * from program where status = 'aktif'");
-	$queryRecent= mysqli_query($connect,"SELECT * from kas where donasiID is not null order by kasID desc limit 1");
-	$data_total = mysqli_fetch_assoc($total);
-	$pemasukan  = $data_total['totalMasuk'] ?? 0;
-	$pengeluaran = $data_total['totalKeluar'] ?? 0;
-	$saldo  = $pemasukan - $pengeluaran;
+$queryKas = mysqli_query($connect, "SELECT * from kas order by tanggal desc");
+$queryProgram = mysqli_query($connect, "SELECT * from program where status = 'aktif'");
+$queryPilih = mysqli_query($connect, "SELECT * from program where status = 'aktif'");
+$queryRecent = mysqli_query($connect, "SELECT * from kas where donasiID is not null order by kasID desc limit 1");
+$data_total = mysqli_fetch_assoc($total);
+$pemasukan = $data_total['totalMasuk'] ?? 0;
+$pengeluaran = $data_total['totalKeluar'] ?? 0;
+$saldo = $pemasukan - $pengeluaran;
 
-    if (isset($_GET['aksi']) && $_GET['aksi'] == 'tambahDonasi') {
-        mysqli_query($connect, "INSERT INTO donasi(tanggal, programID, nama, nominal, noRef) VALUES ('{$_POST['tanggal']}','{$_POST['program']}','{$_POST['nama']}', '{$_POST['nominal']}','{$_POST['noRef']}')");
-        header("Location: index.php");
-        exit;
-    }
+if (isset($_GET['aksi']) && $_GET['aksi'] == 'tambahDonasi') {
+    mysqli_query($connect, "INSERT INTO donasi(tanggal, programID, nama, nominal, noRef) VALUES ('{$_POST['tanggal']}','{$_POST['program']}','{$_POST['nama']}', '{$_POST['nominal']}','{$_POST['noRef']}')");
+    header("Location: index.php");
+    exit;
+}
 
 ?>
 <!DOCTYPE html>
@@ -51,7 +51,7 @@ include 'koneksi.php';
 
             <div class="ms-auto d-flex align-items-center">
 
-                <a href="login.html" class="btn btn-outline-success rounded-pill px-4 d-flex align-items-center">
+                <a href="login.php" class="btn btn-outline-success rounded-pill px-4 d-flex align-items-center">
                     <i class="bi bi-person-fill me-2"></i> Admin
                 </a>
             </div>
@@ -81,27 +81,27 @@ include 'koneksi.php';
             <h2 class="section-title">Featured Programs</h2>
 
             <div class="row g-4 justify-content-center">
-            	<?php while ($program=mysqli_fetch_assoc($queryProgram)): 
-            		$queryTerkumpul=mysqli_query($connect,"SELECT sum(nominal) as terkumpul from kas where programID='{$program['programID']}'");
-            		$nominal=mysqli_fetch_assoc($queryTerkumpul);
-            		$persen = round(($nominal['terkumpul'] / $program['target']) * 100);
-            		?>
-                <div class="col-md-4">
-                    <div class="program-card">
-                        <img src="asset/beasiswa.jpg" alt="<?=$program['nama']?>">
-                        <div class="program-content">
-                            <h5><?=$program['nama']?></h5>
-                            <div class="progress-info">
-                                <div class="progress">
-                                    <div class="progress-bar" style="width: <?=$persen?>%"></div>
+                <?php while ($program = mysqli_fetch_assoc($queryProgram)):
+                    $queryTerkumpul = mysqli_query($connect, "SELECT sum(nominal) as terkumpul from kas where programID='{$program['programID']}'");
+                    $nominal = mysqli_fetch_assoc($queryTerkumpul);
+                    $persen = round(($nominal['terkumpul'] / $program['target']) * 100);
+                    ?>
+                    <div class="col-md-4">
+                        <div class="program-card">
+                            <img src="asset/beasiswa.jpg" alt="<?= $program['nama'] ?>">
+                            <div class="program-content">
+                                <h5><?= $program['nama'] ?></h5>
+                                <div class="progress-info">
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: <?= $persen ?>%"></div>
+                                    </div>
+                                    <p>Funding Progress <span><?= $persen ?>%</span></p>
                                 </div>
-                                <p>Funding Progress <span><?=$persen?>%</span></p>
+                                <a href="#donasi" class="btn-donasi">Donasi Sekarang</a>
                             </div>
-                            <a href="#donasi" class="btn-donasi">Donasi Sekarang</a>
                         </div>
                     </div>
-                </div>    		
-            	<?php endwhile; ?>
+                <?php endwhile; ?>
             </div>
         </div>
     </section>
@@ -141,54 +141,84 @@ include 'koneksi.php';
                 <div class="col-md-3">
                     <div class="summary-card-donasi shadow-sm p-3 text-white">
                         <span class="text-kas-4 fw-bold d-block mb-1">Donasi Terbaru</span>
-                        <?php while($donasiTerbaru=mysqli_fetch_assoc($queryRecent)):
-                        	$programTerbaru= mysqli_query($connect, "SELECT * from program where programID = '{$donasiTerbaru['programID']}'");?>
-                        <h5 class="fw-bold mb-0"><?= "Rp " . number_format($donasiTerbaru['nominal'], 2, ',', '.'); ?></h5>
-                        	<?php while($programRecent=mysqli_fetch_assoc($programTerbaru)):?>
-                        <small class="opacity-75">- <?=$programRecent['nama']?></small>
-                        	<?php endwhile; ?>
-                    <?php endwhile; ?>
+                        <?php while ($donasiTerbaru = mysqli_fetch_assoc($queryRecent)):
+                            $programTerbaru = mysqli_query($connect, "SELECT * from program where programID = '{$donasiTerbaru['programID']}'"); ?>
+                            <h5 class="fw-bold mb-0"><?= "Rp " . number_format($donasiTerbaru['nominal'], 2, ',', '.'); ?>
+                            </h5>
+                            <?php while ($programRecent = mysqli_fetch_assoc($programTerbaru)): ?>
+                                <small class="opacity-75">- <?= $programRecent['nama'] ?></small>
+                            <?php endwhile; ?>
+                        <?php endwhile; ?>
                     </div>
                 </div>
             </div>
 
             <div class="row g-4">
 
-                    <div class="table-container p-4 shadow-sm bg-white rounded-4">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h5 class="fw-bold mb-0 text-pemasukan">Tabel Kas</h5>
-                            <div class="btn-group btn-group-sm">
-                                <button class="btn btn-outline-pemasukan active">Hari Ini</button>
-                                <button class="btn btn-outline-pemasukan">Bulan Ini</button>
+                <div class="table-container p-4 shadow-sm bg-white rounded-4">
+                    <div class="row align-items-center mb-3">
+
+                        <div class="col-md-3">
+                            <h3 class="fw-bold m-0" style="color: var(--hijau-muda);">Tabel Kas</h3>
+                        </div>
+
+                        <div class="col-md-9">
+                            <div class="d-flex align-items-center justify-content-end flex-wrap gap-2 mt-2">
+
+                                <h5 class="fw-bold me-1" style="color: var(--hijau-muda); white-space: nowrap;">Data
+                                    Tanggal:</h5>
+
+                                <input type="date" class="form-control input-tanggal"
+                                    style="height: 40px; width: 160px; border-radius: 10px !important;">
+
+                                <h5 class="fw-bold" style="color: var(--hijau-muda);">-</h5>
+
+                                <input type="date" class="form-control input-tanggal"
+                                    style="height: 40px; width: 160px; border-radius: 10px !important;">
+
+                                <button type="submit" class="btn btn-primary d-flex align-items-center px-3"
+                                    style="height: 40px; border-radius: 8px;">
+                                    <i class="bi bi-search me-2"></i> Cari Data
+                                </button>
+
+                                <button type="reset" class="btn btn-outline-danger d-flex align-items-center px-3"
+                                    style="height: 40px; border-radius: 8px;">
+                                    Reset
+                                </button>
+
                             </div>
                         </div>
-                        <div class="table-responsive">
-                            <table class="table table-hover align-middle custom-table">
-                                <thead>
-                                    <tr>
-                                        <th>Tanggal</th>
-                                        <th>Jenis</th>
-                                        <th>Kategori</th>
-                                        <th>Keterangan</th>
-                                        <th>Nominal</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-								<?php while ($kas=mysqli_fetch_array($queryKas)) :
-									$queryProgramKas= mysqli_query($connect, "SELECT * from program WHERE programID = '{$kas['programID']}'");
-									$programKas = mysqli_fetch_assoc($queryProgramKas); ?>
-                                    <tr>
-                                        <td><?=$kas['tanggal']?></td>
-                                        <td><?=$kas['jenis']?></td>
-                                        <td><?= $programKas['nama']?></td>
-                                        <td><?=$kas['keterangan']?></td>
-                                        <td class="text-pemasukan fw-bold"><?= "Rp " . number_format($kas['nominal'], 2, ',', '.'); ?></td>
-                                    </tr>
-                                <?php endwhile;?>
-                                </tbody>
-                            </table>
-                        </div>
                     </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle custom-table">
+                            <thead>
+                                <tr>
+                                    <th>Tanggal</th>
+                                    <th>Jenis</th>
+                                    <th>Kategori</th>
+                                    <th>Keterangan</th>
+                                    <th>Nominal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php while ($kas = mysqli_fetch_array($queryKas)):
+                                    $queryProgramKas = mysqli_query($connect, "SELECT * from program WHERE programID = '{$kas['programID']}'");
+                                    $programKas = mysqli_fetch_assoc($queryProgramKas); ?>
+                                    <tr>
+                                        <td><?= $kas['tanggal'] ?></td>
+                                        <td><?= $kas['jenis'] ?></td>
+                                        <td><?= $programKas['nama'] ?></td>
+                                        <td><?= $kas['keterangan'] ?></td>
+                                        <td class="text-pemasukan fw-bold">
+                                            <?= "Rp " . number_format($kas['nominal'], 2, ',', '.'); ?>
+                                        </td>
+                                    </tr>
+                                <?php endwhile; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 
 
             </div>
@@ -230,32 +260,35 @@ include 'koneksi.php';
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label small fw-bold">Nama Lengkap</label>
-                                    <input type="text" name="nama" class="form-control" placeholder="Nama donatur" required>
+                                    <input type="text" name="nama" class="form-control" placeholder="Nama donatur"
+                                        required>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label small fw-bold">Tanggal Transfer</label>
-                                    <input type="date"  name="tanggal" class="form-control" required>
+                                    <input type="date" name="tanggal" class="form-control" required>
                                 </div>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label small fw-bold">Jenis Program</label>
-                                <select class="form-select" id="selectProgram" required>
+                                <select class="form-select" id="selectProgram" name="program" required>
                                     <option value="" disabled selected>Pilih Program...</option>
-						        <?php while($program=mysqli_fetch_assoc($queryPilih)):?>
-						            <option value="<?=$program['programID']?>"> <?=$program['nama']?> </option>
-						        <?php endwhile; ?>
+                                    <?php while ($program = mysqli_fetch_assoc($queryPilih)): ?>
+                                        <option value="<?= $program['programID'] ?>"> <?= $program['nama'] ?> </option>
+                                    <?php endwhile; ?>
                                 </select>
                             </div>
 
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label small fw-bold">Nominal (Rp)</label>
-                                    <input type="number" name="nominal" class="form-control" placeholder="Contoh: 100000" required>
+                                    <input type="number" name="nominal" class="form-control"
+                                        placeholder="Contoh: 100000" required>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label small fw-bold">No. Bukti Transfer</label>
-                                    <input type="text" name="noRef" class="form-control" placeholder="Nomor referensi/ID" required>
+                                    <input type="text" name="noRef" class="form-control"
+                                        placeholder="Nomor referensi/ID" required>
                                 </div>
                             </div>
 
