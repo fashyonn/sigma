@@ -1,7 +1,7 @@
 <?php
 include 'koneksi.php';
-    if(isset($_GET['tanggalMulai']) && isset($_GET['tanggalSelesai'])){
-        $queryRange = mysqli_query($connect, "SELECT * FROM(
+if (isset($_GET['tanggalMulai']) && isset($_GET['tanggalSelesai'])) {
+    $queryRange = mysqli_query($connect, "SELECT * FROM(
             SELECT *,
               SUM(CASE 
                   when jenis = 'Kas Masuk' then nominal 
@@ -11,16 +11,16 @@ include 'koneksi.php';
             FROM kas
             ) AS t 
             WHERE tanggal BETWEEN '{$_GET['tanggalMulai']}' AND '{$_GET['tanggalSelesai']}'
-            ORDER BY tanggal ASC");
-    }
-    else{
-        $queryRange = mysqli_query($connect, "SELECT *, sum(case 
+            ORDER BY tanggal desc");
+} else {
+    $queryRange = mysqli_query($connect, "SELECT *, sum(case 
                     when jenis = 'Kas Masuk' then nominal 
                     when jenis = 'Kas Keluar' then -nominal 
                     else 0 
                 end) over (order by tanggal asc, kasID asc) AS saldo
-            from kas");
-    }
+            from kas
+            order by tanggal desc, kasID desc");
+}
 
 $total = mysqli_query($connect, "SELECT 
 		sum(case when jenis = 'Kas Masuk' then nominal else 0 end) AS totalMasuk,
@@ -179,43 +179,45 @@ if (isset($_GET['aksi']) && $_GET['aksi'] == 'tambahDonasi') {
 
                 <div class="table-container p-4 shadow-sm bg-white rounded-4">
                     <form action="" method="GET">
-                    <div class="row align-items-center mb-3">
+                        <div class="row align-items-center mb-3">
 
-                        <div class="col-md-3">
-                            <h3 class="fw-bold m-0" style="color: var(--hijau-muda);">Tabel Kas</h3>
-                        </div>
+                            <div class="col-md-3">
+                                <h3 class="fw-bold m-0" style="color: var(--hijau-muda);">Tabel Kas</h3>
+                            </div>
 
-                        <div class="col-md-9">
-                            <div class="d-flex align-items-center justify-content-end flex-wrap gap-2 mt-2">
-                                <h5 class="fw-bold me-1" style="color: var(--hijau-muda); white-space: nowrap;">Data
-                                    Tanggal:</h5>
+                            <div class="col-md-9">
+                                <div class="d-flex align-items-center justify-content-end flex-wrap gap-2 mt-2">
+                                    <h5 class="fw-bold me-1" style="color: var(--hijau-muda); white-space: nowrap;">Data
+                                        Tanggal:</h5>
 
-                                <input type="date" class="form-control input-tanggal"
-                                    style="height: 40px; width: 160px; border-radius: 10px !important;" name="tanggalMulai" value="<?= $_GET['tanggalMulai'] ?? '' ?>" required>
+                                    <input type="date" class="form-control input-tanggal"
+                                        style="height: 40px; width: 160px; border-radius: 10px !important;"
+                                        name="tanggalMulai" value="<?= $_GET['tanggalMulai'] ?? '' ?>" required>
 
-                                <h5 class="fw-bold" style="color: var(--hijau-muda);">-</h5>
+                                    <h5 class="fw-bold" style="color: var(--hijau-muda);">-</h5>
 
-                                <input type="date" class="form-control input-tanggal"
-                                    style="height: 40px; width: 160px; border-radius: 10px !important;" name="tanggalSelesai" value="<?= $_GET['tanggalSelesai'] ?? '' ?>" required>
+                                    <input type="date" class="form-control input-tanggal"
+                                        style="height: 40px; width: 160px; border-radius: 10px !important;"
+                                        name="tanggalSelesai" value="<?= $_GET['tanggalSelesai'] ?? '' ?>" required>
 
-                                <button type="submit" class="btn btn-primary d-flex align-items-center px-3"
-                                    style="height: 40px; border-radius: 8px;">
+                                    <button type="submit" class="btn btn-primary d-flex align-items-center px-3"
+                                        style="height: 40px; border-radius: 8px;">
 
-                                    <i class="bi bi-search me-2"></i> Cari Data
+                                        <i class="bi bi-search me-2"></i> Cari Data
 
-                                </button>
+                                    </button>
 
-                                <button type="reset" class="btn btn-outline-danger d-flex align-items-center px-3"
-                                    style="height: 40px; border-radius: 8px;">
-                                    Reset
-                                </button>
+                                    <button type="reset" class="btn btn-outline-danger d-flex align-items-center px-3"
+                                        style="height: 40px; border-radius: 8px;">
+                                        Reset
+                                    </button>
 
+                                </div>
                             </div>
                         </div>
-                    </div>
                     </form>
 
-                    <div class="table-responsive">
+                    <div class="table-responsive" style="max-height: 80vh; overflow-y: auto; scroll-behavior: smooth;">
                         <table class="table table-hover align-middle custom-table">
                             <thead>
                                 <tr>
@@ -283,47 +285,44 @@ if (isset($_GET['aksi']) && $_GET['aksi'] == 'tambahDonasi') {
                 </div>
 
                 <div class="col-lg-7">
-                    <div class="form-card p-4 p-md-5 shadow-sm bg-white border-0" style="border-radius: 25px;">
-                        <h4 class="fw-bold mb-4">Konfirmasi Donasi</h4>
-                        <form action="index.php?aksi=tambahDonasi" method="POST" id="formDonasi">
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label small fw-bold">Nama Lengkap</label>
-                                    <input type="text" name="nama" class="form-control" placeholder="Nama donatur"
-                                        required>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label small fw-bold">Tanggal Transfer</label>
-                                    <input type="date" name="tanggal" class="form-control" required>
+                    <div class="form-card p-4 p-md-5 shadow-sm bg-white border-0 text-center"
+                        style="border-radius: 25px;">
+                        <div class="card-pemberitahuan">
+                            <div class="header-dekoratif">
+                                <div class="lingkaran-ikon">
+                                    <i class="bi bi-envelope-paper-heart fs-1" style="color: var(--coklat);"></i>
                                 </div>
                             </div>
 
-                            <div class="mb-3">
-                                <label class="form-label small fw-bold">Jenis Program</label>
-                                <select class="form-select" id="selectProgram" name="program" required>
-                                    <option value="" disabled selected>Pilih Program...</option>
-                                    <?php while ($program = mysqli_fetch_assoc($queryPilih)): ?>
-                                        <option value="<?= $program['programID'] ?>"> <?= $program['nama'] ?> </option>
-                                    <?php endwhile; ?>
-                                </select>
-                            </div>
+                            <div class="card-body px-0 pb-4 pt-0 text-center">
+                                <h1 class="fw-bold mb-2 pt-3 mt-1" style="color: var(--hijau-tua)">Terima Kasih!</h1>
 
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label small fw-bold">Nominal (Rp)</label>
-                                    <input type="number" name="nominal" class="form-control"
-                                        placeholder="Contoh: 100000" required>
+                                <hr style="color: var(--hijau-tua);">
+                                
+                                <h3 class="fw-normal mb-3 px-3" style="color: var(--hijau-muda);">Jazaakumullahu Khairan!</h3>
+
+                                <div class="border-y py-2 mb-4 border-light-subtle">
+                                    <p class="font-pesan mb-0 px-2">
+                                        Terima kasih banyak telah berdonasi di <br>
+                                        <strong style="color: var(--hijau-tua);">Masjid Sigma.</strong>
+                                    </p>
                                 </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label small fw-bold">No. Bukti Transfer</label>
-                                    <input type="text" name="noRef" class="form-control"
-                                        placeholder="Nomor referensi/ID" required>
+
+                                <div class="pesan-instruksi mb-4 px-2 py-2 rounded-3" style="background-color: var(--sage);">
+                                    <p class="font-instruksi mb-2 fw-semibold" style="color: var(--hijau-muda);">Langkah Selanjutnya:</p>
+                                    <p class="font-instruksi mb-0">Silahkan hubungi admin untuk verifikasi.</p>
+                                </div>
+
+                                <div class="mt-auto">
+                                    <a href="https://wa.me/6281334081356" target="_blank" class="btn-donasi">
+                                        <i class="bi bi-whatsapp me-2"></i> Verifikasi Donasi Sekarang
+                                    </a>
+                                    <div class="mt-3">
+                                        <a href="index.php" class="text-decoration-none text-muted small">Kembali ke Beranda</a>
+                                    </div>
                                 </div>
                             </div>
-
-                            <button type="submit" class="btn btn-success w-100 py-3 mt-3 rounded-pill fw-bold">Kirim
-                                Konfirmasi</button>
-                        </form>
+                        </div>
                     </div>
                 </div>
 
