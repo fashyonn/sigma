@@ -236,14 +236,16 @@ if (isset($_GET['aksi']) && $_GET['aksi'] == 'tambahDonasi') {
                                     <tr>
                                         <td><?= $kas['tanggal'] ?></td>
                                         <td>
-                                            <span class="badge <?= ($kas['jenis'] == 'Kas Masuk') ? 'bg-sage text-success' : 'bg-sage text-danger'; ?> rounded-pill px-3 " ><?= $kas['jenis'] ?></span>
+                                            <span
+                                                class="badge <?= ($kas['jenis'] == 'Kas Masuk') ? 'bg-sage text-success' : 'bg-sage text-danger'; ?> rounded-pill px-3 "><?= $kas['jenis'] ?></span>
                                         </td>
                                         <td><?= $programKas['nama'] ?></td>
                                         <td><?= $kas['keterangan'] ?></td>
-                                        <td class="text-pemasukan fw-bold">
+                                        <td
+                                            class="fw-bold <?= ($kas['jenis'] == 'Kas Masuk') ? 'text-success' : 'text-danger'; ?>">
                                             <?= "Rp " . number_format($kas['nominal'], 2, ',', '.'); ?>
                                         </td>
-                                        <td class="text-pemasukan fw-bold">
+                                        <td class="fw-bold" style="color: var(--coklat)">
                                             <?= "Rp " . number_format($kas['saldo'], 2, ',', '.'); ?>
                                         </td>
                                     </tr>
@@ -287,92 +289,96 @@ if (isset($_GET['aksi']) && $_GET['aksi'] == 'tambahDonasi') {
                 </div>
 
                 <div class="col-lg-7">
-                <?php if(isset($_GET['aksi']) && $_GET['aksi']='terimakasih'): ?>
-                    <div class="form-card p-4 p-md-5 shadow-sm bg-white border-0 text-center"
-                        style="border-radius: 25px;">
-                        <div class="card-pemberitahuan">
-                            <div class="header-dekoratif">
-                                <div class="lingkaran-ikon">
-                                    <i class="bi bi-envelope-paper-heart fs-1" style="color: var(--coklat);"></i>
-                                </div>
-                            </div>
-
-
-                            <div class="card-body px-0 pb-4 pt-0 text-center">
-                                <h1 class="fw-bold mb-2 pt-3 mt-1" style="color: var(--hijau-tua)">Terima Kasih!</h1>
-
-                                <hr style="color: var(--hijau-tua);">
-                                
-                                <h3 class="fw-normal mb-3 px-3" style="color: var(--hijau-muda);">Jazaakumullahu Khairan!</h3>
-
-                                <div class="border-y py-2 mb-4 border-light-subtle">
-                                    <p class="font-pesan mb-0 px-2">
-                                        Terima kasih banyak telah berdonasi di <br>
-                                        <strong style="color: var(--hijau-tua);">Masjid Sigma.</strong>
-                                    </p>
+                    <?php if (isset($_GET['aksi']) && $_GET['aksi'] = 'terimakasih'): ?>
+                        <div class="form-card p-4 p-md-5 shadow-sm bg-white border-0 text-center"
+                            style="border-radius: 25px;">
+                            <div class="card-pemberitahuan">
+                                <div class="header-dekoratif">
+                                    <div class="lingkaran-ikon">
+                                        <i class="bi bi-envelope-paper-heart fs-1" style="color: var(--coklat);"></i>
+                                    </div>
                                 </div>
 
-                                <div class="pesan-instruksi mb-4 px-2 py-2 rounded-3" style="background-color: var(--sage);">
-                                    <p class="font-instruksi mb-2 fw-semibold" style="color: var(--hijau-muda);">Langkah Selanjutnya:</p>
-                                    <p class="font-instruksi mb-0">Silahkan hubungi admin untuk verifikasi.</p>
-                                </div>
 
-                                <div class="mt-auto">
-                                    <a href="https://wa.me/6281334081356" target="_blank" class="btn-donasi">
-                                        <i class="bi bi-whatsapp me-2"></i> Verifikasi Donasi Sekarang
-                                    </a>
-                                    <div class="mt-3">
-                                        <a href="index.php?#beranda" class="text-decoration-none text-muted small">Kembali ke Beranda</a>
+                                <div class="card-body px-0 pb-4 pt-0 text-center">
+                                    <h1 class="fw-bold mb-2 pt-3 mt-1" style="color: var(--hijau-tua)">Terima Kasih!</h1>
+
+                                    <hr style="color: var(--hijau-tua);">
+
+                                    <h3 class="fw-normal mb-3 px-3" style="color: var(--hijau-muda);">Jazaakumullahu
+                                        Khairan!</h3>
+
+                                    <div class="border-y py-2 mb-4 border-light-subtle">
+                                        <p class="font-pesan mb-0 px-2">
+                                            Terima kasih banyak telah berdonasi di <br>
+                                            <strong style="color: var(--hijau-tua);">Masjid Sigma.</strong>
+                                        </p>
+                                    </div>
+
+                                    <div class="pesan-instruksi mb-4 px-2 py-2 rounded-3"
+                                        style="background-color: var(--sage);">
+                                        <p class="font-instruksi mb-2 fw-semibold" style="color: var(--hijau-muda);">Langkah
+                                            Selanjutnya:</p>
+                                        <p class="font-instruksi mb-0">Silahkan hubungi admin untuk verifikasi.</p>
+                                    </div>
+
+                                    <div class="mt-auto">
+                                        <a href="https://wa.me/6281334081356" target="_blank" class="btn-donasi">
+                                            <i class="bi bi-whatsapp me-2"></i> Verifikasi Donasi Sekarang
+                                        </a>
+                                        <div class="mt-3">
+                                            <a href="index.php?#beranda"
+                                                class="text-decoration-none text-muted small">Kembali ke Beranda</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <?php else:?>
-                    <div class="form-card p-4 p-md-5 shadow-sm bg-white border-0" style="border-radius: 25px;">
-                        <h4 class="fw-bold mb-4">Konfirmasi Donasi</h4>
-                        <form action="index.php?aksi=tambahDonasi" method="POST" id="formDonasi">
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label small fw-bold">Nama Lengkap</label>
-                                    <input type="text" name="nama" class="form-control" placeholder="Nama donatur"
-                                        required>
+                    <?php else: ?>
+                        <div class="form-card p-4 p-md-5 shadow-sm bg-white border-0" style="border-radius: 25px;">
+                            <h4 class="fw-bold mb-4">Konfirmasi Donasi</h4>
+                            <form action="index.php?aksi=tambahDonasi" method="POST" id="formDonasi">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label small fw-bold">Nama Lengkap</label>
+                                        <input type="text" name="nama" class="form-control" placeholder="Nama donatur"
+                                            required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label small fw-bold">Tanggal Transfer</label>
+                                        <input type="date" name="tanggal" class="form-control" required>
+                                    </div>
                                 </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label small fw-bold">Tanggal Transfer</label>
-                                    <input type="date" name="tanggal" class="form-control" required>
-                                </div>
-                            </div>
 
-                            <div class="mb-3">
-                                <label class="form-label small fw-bold">Jenis Program</label>
-                                <select class="form-select" id="selectProgram" name="program" required>
-                                    <option value="" disabled selected>Pilih Program...</option>
-                                    <?php while ($program = mysqli_fetch_assoc($queryPilih)): ?>
-                                        <option value="<?= $program['programID'] ?>"> <?= $program['nama'] ?> </option>
-                                    <?php endwhile; ?>
-                                </select>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label small fw-bold">Nominal (Rp)</label>
-                                    <input type="number" name="nominal" class="form-control"
-                                        placeholder="Contoh: 100000" required>
+                                <div class="mb-3">
+                                    <label class="form-label small fw-bold">Jenis Program</label>
+                                    <select class="form-select" id="selectProgram" name="program" required>
+                                        <option value="" disabled selected>Pilih Program...</option>
+                                        <?php while ($program = mysqli_fetch_assoc($queryPilih)): ?>
+                                            <option value="<?= $program['programID'] ?>"> <?= $program['nama'] ?> </option>
+                                        <?php endwhile; ?>
+                                    </select>
                                 </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label small fw-bold">No. Bukti Transfer</label>
-                                    <input type="text" name="noRef" class="form-control"
-                                        placeholder="Nomor referensi/ID" required>
-                                </div>
-                            </div>
 
-                            <button type="submit" class="btn btn-success w-100 py-3 mt-3 rounded-pill fw-bold">Kirim
-                                Konfirmasi</button>
-                        </form>
-                    </div>
-                <?php endif; ?>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label small fw-bold">Nominal (Rp)</label>
+                                        <input type="number" name="nominal" class="form-control"
+                                            placeholder="Contoh: 100000" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label small fw-bold">No. Bukti Transfer</label>
+                                        <input type="text" name="noRef" class="form-control"
+                                            placeholder="Nomor referensi/ID" required>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn btn-success w-100 py-3 mt-3 rounded-pill fw-bold">Kirim
+                                    Konfirmasi</button>
+                            </form>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

@@ -362,7 +362,7 @@ if (isset($_GET['bulan']) && isset($_GET['tahun'])) {
                             <a href="kas.php?aksi=inputKas"><button class="btn btn-sm btn-outline-dark"><i
                                         class="bi bi-plus"> Tambah Kas</i></button></a>
                         </div>
-                        <div class="table-responsive">
+                        <div class="table-responsive" style="max-height: 80vh; overflow-y: auto; scroll-behavior: smooth;">
                             <table class="table align-middle custom-admin-table">
                                 <thead>
                                     <tr>

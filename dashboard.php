@@ -132,7 +132,7 @@ include "koneksi.php";
                                     <td><?= $data['tanggal']?></td>
                                     <td><span class="badge bg-sage text-success rounded-pill px-3"><?= $program['nama']?></span></td>
                                     <td class="fw-bold"><?= "Rp " . number_format($data['nominal'], 2, ',', '.'); ?></td>
-                                    <td><span class="text-muted"><?= $data['noRef']?></span></td>
+                                    <td><?= $data['noRef']?></td>
                                     <td>
                                         <?php if ($data['status'] == 'Terverifikasi'): ?>
                                             <span class="badge bg-warning-subtle text-success rounded-pill">Terverifikasi</span>

@@ -80,7 +80,7 @@ include "koneksi.php";
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <h5 class="fw-bold">Antrian Verifikasi Donasi</h5>
                     </div>
-                    <div class="table-responsive">
+                    <div class="table-responsive" style="max-height: 60vh; overflow-y: auto; scroll-behavior: smooth;">
                         <table class="table align-middle custom-admin-table">
                             <thead>
                                 <tr>
@@ -104,7 +104,7 @@ include "koneksi.php";
                                     <td><?= $data['tanggal']?></td>
                                     <td><span class="badge bg-sage text-success rounded-pill px-3"><?= $program['nama']?></span></td>
                                     <td class="fw-bold"><?= "Rp " . number_format($data['nominal'], 2, ',', '.'); ?></td>
-                                    <td><span class="text-muted"><?= $data['noRef']?></span></td>
+                                    <td><?= $data['noRef']?></td>
                                     <td>
                                         <?php if ($data['status'] == 'Terverifikasi'): ?>
                                             <span class="badge bg-warning-subtle text-success rounded-pill">Terverifikasi</span>

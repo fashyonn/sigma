@@ -252,7 +252,7 @@ include "koneksi.php";
                         <a href="user.php?aksi=inputUser"><button class="btn btn-sm btn-outline-dark"><i class="bi bi-plus">Tambah User</i></button></a>
                         <?php endif; ?>
                     </div>
-                    <div class="table-responsive">
+                    <div class="table-responsive" style="max-height: 60vh; overflow-y: auto; scroll-behavior: smooth;">
                         <table class="table align-middle custom-admin-table">
                             <thead>
                                 <tr>
