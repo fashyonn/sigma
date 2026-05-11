@@ -222,7 +222,9 @@ include "koneksi.php";
                 <div class="bg-white p-4 rounded-4 shadow-sm">
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <h5 class="fw-bold">Daftar Program Masjid</h5>
+                        <?php if ($_SESSION['role'] == 'administrator'): ?>
                         <a href="program.php?aksi=inputProgram"><button class="btn btn-sm btn-outline-dark"><i class="bi bi-plus"> Tambah Program</i></button></a>
+                        <?php endif; ?>
                     </div>
                     <div class="table-responsive">
                         <table class="table align-middle custom-admin-table">
@@ -232,7 +234,9 @@ include "koneksi.php";
                                     <th>Nama</th>
                                     <th>Target</th>
                                     <th class="text-center pe-4">Status</th>
+                                    <?php if ($_SESSION['role'] == 'administrator'): ?>
                                     <th class="text-center pe-4">Aksi</th>
+                                    <?php endif; ?>
                                 </tr>
                             </thead>
                             <tbody>
@@ -248,11 +252,13 @@ include "koneksi.php";
                                             <span class="badge bg-warning-subtle text-warning rounded-pill">Nonaktif</span>
                                         <?php endif; ?>
                                     </td>
+                                    <?php if ($_SESSION['role'] == 'administrator'): ?>
                                     <td class="text-center">
                                         <a href="program.php?aksi=editProgram&id=<?= $data['programID']; ?>"><button class="btn btn-sm btn-outline-dark"><i
                                                 class="bi bi-pencil"></i></button></a>
                                         <a href="program.php?aksi=hapus&id=<?= $data['programID']; ?>"><button class="btn btn-sm btn-coklat"><i class="bi bi-trash"></i></button></a>
                                     </td>
+                                    <?php endif; ?>
                                 </tr>
                             <?php endwhile; ?>
                             </tbody>

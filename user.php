@@ -248,7 +248,9 @@ include "koneksi.php";
                 <div class="bg-white p-4 rounded-4 shadow-sm">
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <h5 class="fw-bold">Data User SIGMA</h5>
+                        <?php if ($_SESSION['role'] == 'administrator'): ?>
                         <a href="user.php?aksi=inputUser"><button class="btn btn-sm btn-outline-dark"><i class="bi bi-plus">Tambah User</i></button></a>
+                        <?php endif; ?>
                     </div>
                     <div class="table-responsive">
                         <table class="table align-middle custom-admin-table">
@@ -259,7 +261,9 @@ include "koneksi.php";
                                     <th>Email</th>
                                     <th>Role</th>
                                     <th>Status</th>
+                                    <?php if ($_SESSION['role'] == 'administrator'): ?>
                                     <th class="text-center">Aksi</th>
+                                    <?php endif; ?>
                                 </tr>
                             </thead>
                             <tbody>
@@ -276,12 +280,14 @@ include "koneksi.php";
                                             <span class="badge bg-warning-subtle text-warning rounded-pill">Nonaktif</span>
                                         <?php endif; ?>
                                     </td>
+                                    <?php if ($_SESSION['role'] == 'administrator'): ?>
                                     <td class="text-center">
                                         <a href="user.php?aksi=editUser&id=<?=$data['userID']?>"><button class="btn btn-sm btn-outline-dark"><i
                                                 class="bi bi-pencil"></i></button></a>
                                         <a href="user.php?aksi=hapus&id=<?=$data['userID']?>" 
-                               onclick="return confirm('Hapus user ini?')"><button class="btn btn-sm btn-coklat"><i class="bi bi-shield-lock"></i></button></a>
+                               onclick="return confirm('Hapus user ini?')"><button class="btn btn-sm btn-coklat"><i class="bi bi-trash"></i></button></a>
                                     </td>
+                                    <?php endif; ?>
                                 </tr>
                             <?php endwhile; ?>
                             </tbody>

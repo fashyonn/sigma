@@ -1,17 +1,29 @@
 <?php
 include "koneksi.php";
-$query = mysqli_query($connect, "SELECT * from user");
-    session_start();
+session_start();
 
-if(isset($_GET['aksi'])&& $_GET['aksi']=='login'){
-    while ($user = mysqli_fetch_assoc($query)) {
-        if($user['username']==$_POST['username'] && $user['password'] == $_POST['password']){
+if (isset($_GET['aksi']) && $_GET['aksi'] == 'login') {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    $query = mysqli_query($connect, "SELECT * FROM user WHERE username = '$username' AND password = '$password'");
+    $user = mysqli_fetch_assoc($query);
+
+    if ($user['username'] == $_POST['username'] && $user['password'] == $_POST['password']) {
+        if ($user['status'] != 'nonaktif') {
+            $_SESSION['role'] = $user['role'];
             $_SESSION['userID'] = $user['userID'];
             header("Location: dashboard.php");
+            exit;
+        } else {
+            $_SESSION['pesan'] = "Maaf, akun Anda sedang dinonaktifkan. Hubungi admin untuk aktivasi.";
+            header("Location: login.php");
+            exit;
         }
-        else{
-            echo "your username or password is wrong!";
-        }
+    } else {
+        $_SESSION['pesan'] = "your username or password is wrong!";
+        header("Location: login.php");
+        exit;
     }
 }
 ?>
@@ -39,6 +51,14 @@ if(isset($_GET['aksi'])&& $_GET['aksi']=='login'){
         <div class="login-box">
             <h2>Login</h2>
             <p>Enter your email and password to continue</p>
+
+            <?php
+            if (isset($_SESSION['pesan'])):
+                echo "<p>" . $_SESSION['pesan'] . "</p>";
+                unset($_SESSION['pesan']);
+            endif;
+            ?>
+
             <form action="login.php?aksi=login" method="POST">
                 <div class="mb-3">
                     <input type="text" name="username" class="form-control" placeholder="Username" required>
