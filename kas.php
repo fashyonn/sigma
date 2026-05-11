@@ -361,7 +361,9 @@ if (isset($_GET['bulan']) && isset($_GET['tahun'])) {
                                         <th>Keterangan</th>
                                         <th>Nominal</th>
                                         <th>Saldo</th>
+                                        <?php if ($_SESSION['role'] == 'administrator'): ?>
                                         <th class="text-center pe-4">Aksi</th>
+                                        <?php endif; ?>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -384,6 +386,7 @@ if (isset($_GET['bulan']) && isset($_GET['tahun'])) {
                                             </td>
                                             <td class="ps-4 fw-bold"><?= "Rp " . number_format($data['saldo'], 2, ',', '.'); ?>
                                             </td>
+                                            <?php if ($_SESSION['role'] == 'administrator'): ?>
                                             <td class="text-center">
                                                 <a href="kas.php?aksi=editKas&id=<?= $data['kasID']; ?>"><button
                                                         class="btn btn-sm btn-outline-dark"><i
@@ -391,6 +394,7 @@ if (isset($_GET['bulan']) && isset($_GET['tahun'])) {
                                                 <a href="kas.php?aksi=hapus&id=<?= $data['kasID']; ?>"><button
                                                         class="btn btn-sm btn-coklat"><i class="bi bi-trash"></i></button></a>
                                             </td>
+                                            <?php endif; ?>
                                         </tr>
                                     <?php endwhile; ?>
                                 </tbody>
