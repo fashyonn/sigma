@@ -235,7 +235,9 @@ if (isset($_GET['aksi']) && $_GET['aksi'] == 'tambahDonasi') {
                                     $programKas = mysqli_fetch_assoc($queryProgramKas); ?>
                                     <tr>
                                         <td><?= $kas['tanggal'] ?></td>
-                                        <td><?= $kas['jenis'] ?></td>
+                                        <td>
+                                            <span class="badge <?= ($kas['jenis'] == 'Kas Masuk') ? 'bg-sage text-success' : 'bg-sage text-danger'; ?> rounded-pill px-3 " ><?= $kas['jenis'] ?></span>
+                                        </td>
                                         <td><?= $programKas['nama'] ?></td>
                                         <td><?= $kas['keterangan'] ?></td>
                                         <td class="text-pemasukan fw-bold">
