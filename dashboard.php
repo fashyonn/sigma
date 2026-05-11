@@ -6,6 +6,7 @@ include "koneksi.php";
     }
     $queryUser = mysqli_query($connect, "SELECT username from user where userID = '{$_SESSION['userID']}'" );
     $user = mysqli_fetch_assoc($queryUser); $username = $user['username'];
+    $queryVerifikasi = mysqli_query($connect, "SELECT * from donasi order by tanggal desc limit 3");
 
     $total = mysqli_query($connect, "SELECT 
         sum(case when jenis = 'Kas Masuk' then nominal else 0 end) AS totalMasuk,
@@ -105,7 +106,7 @@ include "koneksi.php";
                 <div class="bg-white p-4 rounded-4 shadow-sm">
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <h5 class="fw-bold">Antrian Verifikasi Donasi</h5>
-                        <a href="verifikasi.html"><button class="btn btn-sm btn-outline-dark rounded-pill">Lihat Semua</button></a>
+                        <a href="verifikasi.php"><button class="btn btn-sm btn-outline-dark rounded-pill">Lihat Semua</button></a>
                     </div>
                     <div class="table-responsive">
                         <table class="table align-middle custom-admin-table">
@@ -122,37 +123,37 @@ include "koneksi.php";
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php while ($data = mysqli_fetch_assoc($queryVerifikasi)):
+            $queryProgram= mysqli_query($connect, "SELECT * from program WHERE programID = '{$data['programID']}'");
+            $program = mysqli_fetch_assoc($queryProgram); ?>
                                 <tr>
-                                    <td class="ps-4 fw-bold">DON-001</td>
-                                    <td>Ahmad Fulan</td>
-                                    <td>14/07/2026</td>
-                                    <td><span class="badge bg-sage text-success rounded-pill px-3">Beasiswa</span></td>
-                                    <td class="fw-bold">Rp 500.000</td>
-                                    <td><span class="text-muted">12345678</span></td>
-                                    <td><span class="badge bg-warning-subtle text-warning rounded-pill">Belum Terverifikasi</span>
+                                    <td class="ps-4 fw-bold"><?= $data['donasiID']?></td>
+                                    <td><?= $data['nama']?></td>
+                                    <td><?= $data['tanggal']?></td>
+                                    <td><span class="badge bg-sage text-success rounded-pill px-3"><?= $program['nama']?></span></td>
+                                    <td class="fw-bold"><?= "Rp " . number_format($data['nominal'], 2, ',', '.'); ?></td>
+                                    <td><span class="text-muted"><?= $data['noRef']?></span></td>
+                                    <td>
+                                        <?php if ($data['status'] == 'Terverifikasi'): ?>
+                                            <span class="badge bg-warning-subtle text-success rounded-pill">Terverifikasi</span>
+                                        <?php else: ?>
+                                            <span class="badge bg-warning-subtle text-warning rounded-pill">Belum Terverifikasi</span>
+                                        <?php endif; ?>
                                     </td>
                                     <td class="text-center pe-4">
+
                                         <div class="d-flex gap-2 justify-content-center">
-                                            <button class="btn btn-sm btn-success rounded-pill px-3">Verifikasi</button>
+                                        <?php if ($data['status'] == 'Belum Terverifikasi' || empty($data['status'])): ?>
+                                            <a class="btn btn-sm btn-success rounded-pill px-3" href="verifikasi.php?aksi=verifikasi&id=<?= $data['donasiID']; ?>" 
+                                               onclick="return confirm('Verifikasi donasi ini?')"
+                                               style="padding: 5px 10px; background: black; color: white; text-decoration: none; border-radius: 3px;">
+                                               Verifikasi
+                                            </a>                    
+                                        <?php endif; ?>
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td class="ps-4 fw-bold">DON-002</td>
-                                    <td>Siti Fatimah</td>
-                                    <td>14/07/2026</td>
-                                    <td><span class="badge bg-sage text-success rounded-pill px-3">Pembangunan</span>
-                                    </td>
-                                    <td class="fw-bold">Rp 1.000.000</td>
-                                    <td><span class="text-muted">135624745</span></td>
-                                    <td><span class="badge bg-warning-subtle text-warning rounded-pill">Belum Terverifikasi</span>
-                                    </td>
-                                    <td class="text-center pe-4">
-                                        <div class="d-flex gap-2 justify-content-center">
-                                            <button class="btn btn-sm btn-success rounded-pill px-3">Verifikasi</button>
-                                        </div>
-                                    </td>
-                                </tr>
+                                <?php endwhile; ?>
                             </tbody>
                         </table>
                     </div>

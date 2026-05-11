@@ -26,7 +26,7 @@ $total = mysqli_query($connect, "SELECT
 		sum(case when jenis = 'Kas Masuk' then nominal else 0 end) AS totalMasuk,
 		sum(case when jenis = 'Kas Keluar' then nominal else 0 end) AS totalKeluar
 		FROM kas");
-// $queryKas = mysqli_query($connect, "SELECT * from kas order by tanggal desc");
+
 $queryProgram = mysqli_query($connect, "SELECT * from program where status = 'aktif'");
 $queryPilih = mysqli_query($connect, "SELECT * from program where status = 'aktif'");
 $queryRecent = mysqli_query($connect, "SELECT * from donasi where status = 'Terverifikasi' order by donasiID desc limit 1");
@@ -37,7 +37,7 @@ $saldo = $pemasukan - $pengeluaran;
 
 if (isset($_GET['aksi']) && $_GET['aksi'] == 'tambahDonasi') {
     mysqli_query($connect, "INSERT INTO donasi(tanggal, programID, nama, nominal, noRef) VALUES ('{$_POST['tanggal']}','{$_POST['program']}','{$_POST['nama']}', '{$_POST['nominal']}','{$_POST['noRef']}')");
-    header("Location: index.php");
+    header("Location: index.php?aksi=terimakasih#donasi");
     exit;
 }
 
@@ -80,7 +80,7 @@ if (isset($_GET['aksi']) && $_GET['aksi'] == 'tambahDonasi') {
         </div>
     </nav>
 
-    <section class="hero-banner">
+    <section class="hero-banner" id="beranda">
         <h1 class="hero-title">
             Mewujudkan Transparansi <br> dan Kemajuan Ummat
         </h1>
@@ -110,7 +110,7 @@ if (isset($_GET['aksi']) && $_GET['aksi'] == 'tambahDonasi') {
                     ?>
                     <div class="col-md-4">
                         <div class="program-card">
-                            <img src="asset/beasiswa.jpg" alt="<?= $program['nama'] ?>">
+                            <img src="<?= $program['gambar'] ?>" alt="<?= $program['nama'] ?>">
                             <div class="program-content">
                                 <h5><?= $program['nama'] ?></h5>
                                 <div class="progress-info">
@@ -178,7 +178,7 @@ if (isset($_GET['aksi']) && $_GET['aksi'] == 'tambahDonasi') {
             <div class="row g-4">
 
                 <div class="table-container p-4 shadow-sm bg-white rounded-4">
-                    <form action="" method="GET">
+                    <form action="index.php?#kas" method="GET">
                         <div class="row align-items-center mb-3">
 
                             <div class="col-md-3">
@@ -285,6 +285,7 @@ if (isset($_GET['aksi']) && $_GET['aksi'] == 'tambahDonasi') {
                 </div>
 
                 <div class="col-lg-7">
+                <?php if(isset($_GET['aksi']) && $_GET['aksi']='terimakasih'): ?>
                     <div class="form-card p-4 p-md-5 shadow-sm bg-white border-0 text-center"
                         style="border-radius: 25px;">
                         <div class="card-pemberitahuan">
@@ -293,6 +294,7 @@ if (isset($_GET['aksi']) && $_GET['aksi'] == 'tambahDonasi') {
                                     <i class="bi bi-envelope-paper-heart fs-1" style="color: var(--coklat);"></i>
                                 </div>
                             </div>
+
 
                             <div class="card-body px-0 pb-4 pt-0 text-center">
                                 <h1 class="fw-bold mb-2 pt-3 mt-1" style="color: var(--hijau-tua)">Terima Kasih!</h1>
@@ -318,14 +320,58 @@ if (isset($_GET['aksi']) && $_GET['aksi'] == 'tambahDonasi') {
                                         <i class="bi bi-whatsapp me-2"></i> Verifikasi Donasi Sekarang
                                     </a>
                                     <div class="mt-3">
-                                        <a href="index.php" class="text-decoration-none text-muted small">Kembali ke Beranda</a>
+                                        <a href="index.php?#beranda" class="text-decoration-none text-muted small">Kembali ke Beranda</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
+                    <?php else:?>
+                    <div class="form-card p-4 p-md-5 shadow-sm bg-white border-0" style="border-radius: 25px;">
+                        <h4 class="fw-bold mb-4">Konfirmasi Donasi</h4>
+                        <form action="index.php?aksi=tambahDonasi" method="POST" id="formDonasi">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label small fw-bold">Nama Lengkap</label>
+                                    <input type="text" name="nama" class="form-control" placeholder="Nama donatur"
+                                        required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label small fw-bold">Tanggal Transfer</label>
+                                    <input type="date" name="tanggal" class="form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label small fw-bold">Jenis Program</label>
+                                <select class="form-select" id="selectProgram" name="program" required>
+                                    <option value="" disabled selected>Pilih Program...</option>
+                                    <?php while ($program = mysqli_fetch_assoc($queryPilih)): ?>
+                                        <option value="<?= $program['programID'] ?>"> <?= $program['nama'] ?> </option>
+                                    <?php endwhile; ?>
+                                </select>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label small fw-bold">Nominal (Rp)</label>
+                                    <input type="number" name="nominal" class="form-control"
+                                        placeholder="Contoh: 100000" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label small fw-bold">No. Bukti Transfer</label>
+                                    <input type="text" name="noRef" class="form-control"
+                                        placeholder="Nomor referensi/ID" required>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-success w-100 py-3 mt-3 rounded-pill fw-bold">Kirim
+                                Konfirmasi</button>
+                        </form>
+                    </div>
+                <?php endif; ?>
+                </div>
             </div>
         </div>
     </section>

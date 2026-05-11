@@ -40,7 +40,7 @@ if (isset($_GET['bulan']) && isset($_GET['tahun'])) {
     $tahun = $_GET['tahun'] ?? date('Y');
     $query = mysqli_query($connect, "SELECT * FROM (
             SELECT 
-                kasID, tanggal, jenis, kategori, nominal, keterangan,
+                kasID, tanggal, jenis, programID, nominal, keterangan,
                 sum(case 
                     when jenis = 'Kas Masuk' then nominal 
                     when jenis = 'Kas Keluar' then -nominal 
@@ -333,19 +333,31 @@ if (isset($_GET['bulan']) && isset($_GET['tahun'])) {
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <h5 class="fw-bold">Laporan Kas</h5>
                             <div class="col-md-9">
+                                <form action="kas.php" method="GET">
                                 <div class="d-flex align-items-center justify-content-start flex-wrap gap-2">
-                                    <select class="form-select rounded-pill px-3" name="Bulan" style="max-width: 140px; height: 35px;">
+                                    <select class="form-select rounded-pill px-3" name="bulan" style="max-width: 140px; height: 35px;">
                                         <option value="" disabled selected>Pilih Bulan...</option>
+                                        <?php $bulan = [
+                                            '01' => 'Januari', '02' => 'Februari', '03' => 'Maret', '04' => 'April',
+                                            '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Agustus',
+                                            '09' => 'September', '10' => 'Oktober', '11' => 'November', '12' => 'Desember'
+                                        ];
+                                        foreach ($bulan as $no => $nama) {
+                                            $selected = (isset($_GET['bulan']) && $_GET['bulan'] == $no) ? 'selected' : '';
+                                            echo "<option value='$no' $selected>$nama</option>";
+                                        }
+                                        ?>
                                     </select>
 
                                     <h5 class="fw-bold" style="color: var(--hijau-muda);">/</h5>
 
-                                    <input type="number" class="form-select rounded-pill px-3" name="Tahun"
-                                        placeholder="Tahun..." style="max-width: 140px; height: 35px;">
+                                    <input type="number" class="form-select rounded-pill px-3" name="tahun"
+                                        value="<?= $_GET['tahun'] ?? date('Y') ?>" style="max-width: 140px; height: 35px;">
 
                                     <button type="submit" class="btn btn-sm btn-primary">Tampilkan</button>
                                     <button type="reset" class="btn btn-sm btn-outline-danger">Reset</button>
-                                </div>
+                                </div>  
+                                </form>
                             </div>
                             <a href="kas.php?aksi=inputKas"><button class="btn btn-sm btn-outline-dark"><i
                                         class="bi bi-plus"> Tambah Kas</i></button></a>
@@ -371,8 +383,8 @@ if (isset($_GET['bulan']) && isset($_GET['tahun'])) {
                                         <tr>
                                             <td class="ps-4 fw-bold"><?= $data['kasID'] ?></td>
                                             <td><?= $data['tanggal'] ?></td>
-                                            <td><span
-                                                    class="badge bg-sage text-success rounded-pill px-3"><?= $data['jenis'] ?></span>
+                                            <td>
+                                                <span class="badge <?= ($data['jenis'] == 'Kas Masuk') ? 'bg-sage text-success' : 'bg-sage text-danger'; ?> rounded-pill px-3 " ><?= $data['jenis'] ?></span>
                                             </td>
                                             <td><span
                                                     class="badge bg-light text-secondary-emphasis rounded-pill px-3"><?= $program['nama'] ?></span>

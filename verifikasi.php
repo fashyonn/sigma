@@ -7,7 +7,7 @@ include "koneksi.php";
         $queryUser = mysqli_query($connect, "SELECT username from user where userID = '{$_SESSION['userID']}'" );
     $user = mysqli_fetch_assoc($queryUser); $username = $user['username'];
 
-    $query = mysqli_query($connect, "SELECT * from donasi");
+    $query = mysqli_query($connect, "SELECT * from donasi order by tanggal desc ");
     $queryProgram = mysqli_query($connect, "SELECT * from program");
     if (isset($_GET['aksi']) && $_GET['aksi'] == 'verifikasi') {
         $id = $_GET['id'];
