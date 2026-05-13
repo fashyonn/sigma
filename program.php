@@ -244,7 +244,7 @@ include "koneksi.php";
                                 <tr>
                                     <td class="ps-4 fw-bold"><?=$data['programID']?></td>
                                     <td><?=$data['nama']?></td>
-                                    <td><?=$data['target']?></td>
+                                    <td><?= "Rp " . number_format($data['target'], 2, ',', '.'); ?></td>
                                     <td class="text-center pe-4">
                                         <?php if ($data['status'] == 'aktif'): ?>
                                             <span class="badge bg-warning-subtle text-success rounded-pill">Aktif</span>
