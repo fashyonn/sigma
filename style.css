@@ -406,7 +406,6 @@ p {
     overflow-x: hidden;
 }
 
-/* Sidebar Styling */
 .sidebar {
     background-color: var(--hijau-tua) !important;
     box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
@@ -435,7 +434,6 @@ p {
 
 .list-group-item:hover {
     background-color: rgba(242, 237, 194, 0.1) !important;
-    /* Efek hover cream transparan */
     color: var(--cream) !important;
     transform: translateX(5px);
 }
@@ -446,7 +444,6 @@ p {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Card Statistik */
 .stat-card {
     border: none;
     transition: all 0.3s ease;
@@ -462,7 +459,6 @@ p {
     font-size: 1.8rem;
 }
 
-/* Tabel Styling */
 .custom-admin-table thead th {
     background-color: var(--sage);
     color: var(--hijau-tua);
@@ -483,7 +479,6 @@ p {
     background-color: var(--putih);
 }
 
-/* Badge & Utility */
 .bg-sage {
     background-color: var(--sage) !important;
 }
@@ -497,7 +492,6 @@ p {
     font-weight: 600;
 }
 
-/* Tombol Kustom */
 .btn-success {
     background-color: var(--hijau-muda) !important;
     border: none;
@@ -532,7 +526,6 @@ p {
     color: var(--putih);
 }
 
-/* Navbar */
 .navbar {
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
@@ -550,4 +543,12 @@ p {
     border-radius: 50%;
     border: 3px solid rgba(242, 237, 194, 0.3);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+    height: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--putih);
+    border-radius: 10px;
 }

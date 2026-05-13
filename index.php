@@ -102,7 +102,7 @@ if (isset($_GET['aksi']) && $_GET['aksi'] == 'tambahDonasi') {
         <div class="container">
             <h2 class="section-title">Featured Programs</h2>
 
-            <div class="row g-4 justify-content-center">
+            <div class="row g-4 justify-content-center flex-nowrap overflow-auto pb-4 custom-scrollbar" style="scrollbar-width: thin;">
                 <?php while ($program = mysqli_fetch_assoc($queryProgram)):
                     $queryTerkumpul = mysqli_query($connect, "SELECT sum(nominal) as terkumpul from kas where programID='{$program['programID']}'");
                     $nominal = mysqli_fetch_assoc($queryTerkumpul);
