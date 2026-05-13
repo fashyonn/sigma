@@ -206,7 +206,7 @@ include "koneksi.php";
                                 </div>
 
                                 <div class="d-flex justify-content-end gap-2 mt-4">
-                                    <a href="program.html"><button type="button" class="btn btn-light rounded-pill px-4">Batal</button></a>
+                                    <a href="program.php"><button type="button" class="btn btn-light rounded-pill px-4">Batal</button></a>
                                     <button type="submit" class="btn btn-success rounded-pill px-4 shadow-sm">Tambah</button>
                                 </div>
                             </form>

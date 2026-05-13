@@ -2,7 +2,7 @@
 $hostname = 'localhost';
 $username = 'root';
 $password = '';
-$database = 'sigma1';
+$database = 'sigma';
 $port = 3306;
 
 $connect = new mysqli($hostname,$username,$password,$database,$port);

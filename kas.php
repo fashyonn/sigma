@@ -205,7 +205,7 @@ if (isset($_GET['bulan']) && isset($_GET['tahun'])) {
 
 
                                     <div class="d-flex justify-content-end gap-2 mt-4">
-                                        <a href="kas.html"><button type="button"
+                                        <a href="kas.php"><button type="button"
                                                 class="btn btn-light rounded-pill px-4">Batal</button></a>
                                         <button type="submit" class="btn btn-success rounded-pill px-4 shadow-sm">Simpan
                                             Perubahan</button>

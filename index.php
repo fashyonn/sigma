@@ -63,7 +63,7 @@ if (isset($_GET['aksi']) && $_GET['aksi'] == 'tambahDonasi') {
 <body>
     <nav class="navbar navbar-expand-lg bg-light shadow-sm py-3">
         <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="index.html">
+            <a class="navbar-brand d-flex align-items-center" href="index.php">
                 <img src="asset/SIGMA.png" alt="Logo" height="50" class="me-2">
                 <div>
                     <span>SIGMA</span>
